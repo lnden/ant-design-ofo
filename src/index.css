@@ -6,6 +6,8 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #e8e8e8;
+    padding:20px;
 }
 
 code {
@@ -18,4 +20,8 @@ button{
 }
 .ant-spin{
     margin:0 10px;
+}
+
+.ant-card{
+    margin-bottom: 20px;
 }

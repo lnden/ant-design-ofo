@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Button, Modal } from 'antd'
-import './ui.less'
+import './ui.css'
 
 export default class Modals extends Component {
 
@@ -18,12 +18,12 @@ export default class Modals extends Component {
 
     handleConfirm = (type) => {
         Modal[type]({
-            title:'确认?',
-            content:'你确定你学会了React了吗?',
-            onOk(){
+            title: '确认?',
+            content: '你确定你学会了React了吗?',
+            onOk() {
                 console.log('ok')
             },
-            onCancel(){
+            onCancel() {
                 console.log('cancel')
             }
 
@@ -40,7 +40,7 @@ export default class Modals extends Component {
                     <Button type="primary" onClick={() => this.handleOpen('showModal3')}>顶部20px弹框</Button>
                     <Button type="primary" onClick={() => this.handleOpen('showModal4')}>水平垂直居中</Button>
                 </Card>
-                <Card title="信息确认s框">
+                <Card title="信息确认框">
                     <Button type="primary" onClick={() => this.handleConfirm('confirm')}>Confirm</Button>
                     <Button type="primary" onClick={() => this.handleConfirm('info')}>Info</Button>
                     <Button type="primary" onClick={() => this.handleConfirm('success')}>Success</Button>

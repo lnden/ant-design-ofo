@@ -9,3 +9,8 @@
 ### Catalogue
 
 ### Depend
+
+```
+yarn add antd --save
+yarn add moment --save
+```

@@ -17,7 +17,8 @@ export default class BasicTable extends Component {
                 interest: '1',
                 birthday: '2002-01-01',
                 address: '黑龙江省七台河市',
-                time: '09:00'
+                time: '09:00',
+                key:'11'
             },
             {
                 id: '1',
@@ -27,7 +28,8 @@ export default class BasicTable extends Component {
                 interest: '2',
                 birthday: '2000-01-01',
                 address: '北京市昌平区',
-                time: '09:00'
+                time: '09:00',
+                key:'22'
             },
             {
                 id: '2',
@@ -37,7 +39,8 @@ export default class BasicTable extends Component {
                 interest: '2',
                 birthday: '2004-01-01',
                 address: '天津市北辰区',
-                time: '09:00'
+                time: '09:00',
+                key:'33'
             }
         ]
         this.setState({ dataSource })
@@ -65,6 +68,9 @@ export default class BasicTable extends Component {
             }
         }).then(res => {
             if (res.code === 0) {
+                res.result.map((item,index)=>{
+                    item.key=index
+                })
                 this.setState({
                     dataSource2: res.result
                 })
@@ -86,7 +92,7 @@ export default class BasicTable extends Component {
                 title: '性别',
                 dataIndex: 'sex',
                 render(sex) {
-                    return sex == 1 ? '男' : '女'
+                    return sex === 1 ? '男' : '女'
                 }
             },
             {

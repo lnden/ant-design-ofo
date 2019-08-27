@@ -60,7 +60,8 @@ export default class BasicTable extends Component {
             data: {
                 params: {
                     page: 1
-                }
+                },
+                isShowLoading: true
             }
         }).then(res => {
             if (res.code === 0) {
@@ -83,15 +84,41 @@ export default class BasicTable extends Component {
             },
             {
                 title: '性别',
-                dataIndex: 'sex'
+                dataIndex: 'sex',
+                render(sex) {
+                    return sex == 1 ? '男' : '女'
+                }
             },
             {
                 title: '状态',
-                dataIndex: 'state'
+                dataIndex: 'state',
+                render(state) {
+                    let config = {
+                        '1': '进行时',
+                        '2': '将来时',
+                        '3': '过去时',
+                        '4': '过去进行时',
+                        '5': 'oye'
+                    }
+                    return config[state]
+                }
             },
             {
                 title: '爱好',
-                dataIndex: 'interest'
+                dataIndex: 'interest',
+                render(interest) {
+                    let config = {
+                        '1': '游泳',
+                        '2': '打篮球',
+                        '3': '踢足球',
+                        '4': '跑步',
+                        '5': '爬山',
+                        '6': '骑行',
+                        '7': '桌球',
+                        '8': '麦霸'
+                    }
+                    return config[interest]
+                }
             },
             {
                 title: '生日',

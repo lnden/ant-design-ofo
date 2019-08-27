@@ -13,4 +13,5 @@
 ```
 yarn add antd --save
 yarn add moment --save
+yarn add axios --save
 ```

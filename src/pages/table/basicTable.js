@@ -18,7 +18,7 @@ export default class BasicTable extends Component {
                 birthday: '2002-01-01',
                 address: '黑龙江省七台河市',
                 time: '09:00',
-                key:'11'
+                key: '11'
             },
             {
                 id: '1',
@@ -29,7 +29,7 @@ export default class BasicTable extends Component {
                 birthday: '2000-01-01',
                 address: '北京市昌平区',
                 time: '09:00',
-                key:'22'
+                key: '22'
             },
             {
                 id: '2',
@@ -40,7 +40,7 @@ export default class BasicTable extends Component {
                 birthday: '2004-01-01',
                 address: '天津市北辰区',
                 time: '09:00',
-                key:'33'
+                key: '33'
             }
         ]
         this.setState({ dataSource })
@@ -68,13 +68,22 @@ export default class BasicTable extends Component {
             }
         }).then(res => {
             if (res.code === 0) {
-                res.result.map((item,index)=>{
-                    item.key=index
+                res.result.map((item, index) => {
+                    item.key = index
                 })
                 this.setState({
                     dataSource2: res.result
                 })
             }
+        })
+    }
+
+    onRowClick = (record, index) => {
+        console.log(record,index)
+        let selectKey = [index]
+        this.setState({
+            selectedRowKeys: selectKey,//选中索引
+            selectedItem: record//选中字段
         })
     }
 
@@ -139,6 +148,11 @@ export default class BasicTable extends Component {
                 dataIndex: 'time'
             },
         ]
+        const { selectedRowKeys } = this.state;
+        const rowSelection = {
+            type: 'radio',
+            selectedRowKeys
+        }
         return (
             <div>
                 <Card title="基础表格">
@@ -149,9 +163,26 @@ export default class BasicTable extends Component {
                         pagination={false}
                     />
                 </Card>
-                <Card title="动态数据渲染表格">
+                <Card title="动态数据渲染表格 easy mock">
                     <Table
                         bordered
+                        columns={columns}
+                        dataSource={this.state.dataSource2}
+                        pagination={false}
+                    />
+                </Card>
+                <Card title="Mock-单选 动态数据渲染表格">
+                    <Table
+                        bordered
+                        rowSelection={rowSelection}
+                        onRow={(record, index) => {
+                            return {
+                                onClick: () => {
+                                    this.onRowClick(record, index)
+                                },//点击
+                                //onMouseEnter: () => { }//鼠标移入行
+                            }
+                        }}
                         columns={columns}
                         dataSource={this.state.dataSource2}
                         pagination={false}

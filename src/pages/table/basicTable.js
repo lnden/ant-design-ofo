@@ -1,15 +1,17 @@
 import React, {Component} from 'react'
 import {Card, Table} from 'antd'
 import axios from './../../utils/request'
+import columns from './columns'
 import RenderTable from './RenderTable'
 import RadioTable from './RadioTable'
-import columns from './columns'
+import CheckTable from './CheckTable'
+
 
 export default class BasicTable extends Component {
 
     state = {
         dataSource: [],
-        dataSource2:[]
+        dataSource2: [],
     }
 
     componentDidMount() {
@@ -49,11 +51,11 @@ export default class BasicTable extends Component {
             }
         ]
         this.setState({dataSource2})
-        this.request()
+        this.requestList()
     }
 
     //动态获取mock数据
-    request = () => {
+    requestList = () => {
         // const baseUrl = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
         // axios.get(`${baseUrl}/table/list`).then((res) => {
         //     if (res.status === 200 && res.data.code === 0) {
@@ -77,12 +79,17 @@ export default class BasicTable extends Component {
                     item.key = index
                 })
                 this.setState({
-                    dataSource:res.result
+                    dataSource: res.result,
+                    selectedRowKeys: [],
+                    selectedRows: null,
                 })
             }
         })
-    }
+    };
 
+    handleClickDelete = () =>{
+        this.requestList();
+    }
 
     render() {
         const {dataSource} = this.state;
@@ -101,6 +108,9 @@ export default class BasicTable extends Component {
                 </Card>
                 <Card title="Mock-单选 动态数据渲染表格">
                     <RadioTable dataSource={dataSource}/>
+                </Card>
+                <Card title="Mock-复选 动态数据渲染表格">
+                    <CheckTable handleClickDelete={this.handleClickDelete} dataSource={dataSource}/>
                 </Card>
             </div>
         )

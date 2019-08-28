@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Table } from 'antd'
 import axios from './../../utils/request'
+import RenderTable from './RenderTable'
+
 export default class BasicTable extends Component {
 
     state = {
@@ -164,12 +166,7 @@ export default class BasicTable extends Component {
                     />
                 </Card>
                 <Card title="动态数据渲染表格 easy mock">
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={this.state.dataSource2}
-                        pagination={false}
-                    />
+                    <RenderTable />
                 </Card>
                 <Card title="Mock-单选 动态数据渲染表格">
                     <Table

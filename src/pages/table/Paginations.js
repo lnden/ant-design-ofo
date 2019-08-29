@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Table} from 'antd'
 import columns from './columns'
-import Utils from '../../utils/utils'
 
 export default class Paginations extends Component {
     render() {
@@ -10,7 +9,7 @@ export default class Paginations extends Component {
                 bordered
                 columns={columns}
                 dataSource={this.props.dataSource}
-                pagination={Utils.pagination()}
+                pagination={this.props.pagination}
             />
         )
     }

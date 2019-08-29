@@ -13,9 +13,7 @@ export default class CheckTable extends Component {
     hanldeDelete = () => {
         let row = this.state.selectedRows;
         let ids = [];
-        row.map((item) => {
-            ids.push(item.id)
-        });
+        row.map((item) => ids.push(item.id));
         Modal.confirm({
             title: '删除提示',
             content: `您确定要删除这些数据吗?${ids.join(',')}`,

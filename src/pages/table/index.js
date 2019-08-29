@@ -1,17 +1,21 @@
 import React, {Component} from 'react'
-import {Card, Table} from 'antd'
+import {Card} from 'antd'
 import axios from './../../utils/request'
-import columns from './columns'
 import BasicTable from './BasicTable'
 import RenderTable from './RenderTable'
 import RadioTable from './RadioTable'
 import CheckTable from './CheckTable'
+import Paginations from './Paginations'
 import Utils from '../../utils/utils'
 
-export default class BasicTable extends Component {
+export default class Tables extends Component {
 
     state = {
         dataSource: [],
+    }
+
+    params = {
+        page: 1
     }
 
     componentDidMount() {
@@ -40,9 +44,7 @@ export default class BasicTable extends Component {
             }
         }).then(res => {
             if (res.code === 0) {
-                res.result.list.map((item, index) => {
-                    item.key = index
-                })
+                res.result.list.map((item, index) => item.key = index)
                 this.setState({
                     dataSource: res.result.list,
                     selectedRowKeys: [],
@@ -61,11 +63,11 @@ export default class BasicTable extends Component {
     }
 
     render() {
-        const {dataSource} = this.state;
+        const {dataSource,pagination} = this.state;
         return (
             <div>
                 <Card title="基础表格">
-                    <BasicTable />
+                    <BasicTable/>
                 </Card>
                 <Card title="动态数据渲染表格 easy mock">
                     <RenderTable dataSource={dataSource}/>
@@ -77,15 +79,16 @@ export default class BasicTable extends Component {
                     <CheckTable handleClickDelete={this.handleClickDelete} dataSource={dataSource}/>
                 </Card>
                 <Card title="Mock-pagination 动态数据渲染表格">
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={dataSource}
-                        pagination={this.state.pagination}
-                    />
-                    {/*<Paginations dataSource={dataSource}/>*/}
+                    <Paginations dataSource={dataSource}   pagination={pagination}/>
                 </Card>
             </div>
         )
     }
 }
+//  此为分页
+//  <Table
+//      bordered
+//      columns={columns}
+//      dataSource={dataSource}
+//      pagination={this.state.pagination}
+//  />

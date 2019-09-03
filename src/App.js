@@ -1,5 +1,5 @@
 import React from 'react';
-import Buttons from './pages/ui/buttons'
+import Buttons from './pages/table/high/index.js'
 
 function App() {
     return (

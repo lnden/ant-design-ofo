@@ -1,4 +1,4 @@
-import {genderFilter, interestFilter, statusFilter} from "../../utils/filter";
+import {genderFilter, interestFilter, statusFilter} from "../../../utils/filter";
 
 const columns = [
     {

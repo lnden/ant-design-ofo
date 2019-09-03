@@ -1,25 +1,26 @@
-import React, { Component } from 'react'
-import { Card, Table } from 'antd'
-import columns from '../columns'
+import React, {Component} from 'react'
+import {Card} from 'antd'
 import axios from '../../../utils/request'
+import HeadFixed from './HeadFixed'
+import SideFixed from './SideFixed'
+import SortTable from './SortTable'
+import OperationTable from './OperationTable'
 
 export default class Hightable extends Component {
 
     state = {
         dataSource: [],
-        sortOrder:''
-    }
+    };
 
     params = {
         page: 1
-    }
+    };
 
     componentDidMount() {
         this.requestList()
     }
 
     requestList = () => {
-        let _this = this;
         axios.ajax({
             url: '/table/list',
             data: {
@@ -39,51 +40,21 @@ export default class Hightable extends Component {
     };
 
 
-    hanldeChange = (pagination, filters, sorter) => {
-        console.log(sorter.order,1111)
-        this.setState({
-            sortOrder: sorter.order
-        })
-    }
-
     render() {
+        const {dataSource} = this.state;
         return (
             <div>
                 <Card title="头部固定">
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={this.state.dataSource}
-                        pagination={false}
-                        scroll={{ y: 240 }}//使用scroll定义表格高度，此时出现表头和表格内容宽度不一致，需要定义columns的宽度
-                    />
+                    <HeadFixed dataSource={dataSource}/>
                 </Card>
-                <Card title="左侧固定">
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={this.state.dataSource}
-                        pagination={false}
-                        scroll={{ x: 2040 }}//宽度累加起来的总合
-                        onChange={this.hanldeChange}
-                    />
+                <Card title="两侧固定">
+                    <SideFixed dataSource={dataSource}/>
                 </Card>
                 <Card title="表格排序">
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={this.state.dataSource}
-                        pagination={false}
-                       
-                    />
+                    <SortTable dataSource={dataSource}/>
                 </Card>
                 <Card title="操作表格">
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={this.state.dataSource}
-                        pagination={false}
-                    />
+                    <OperationTable dataSource={dataSource}/>
                 </Card>
             </div>
         )

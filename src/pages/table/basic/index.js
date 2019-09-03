@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {Card} from 'antd'
-import axios from './../../utils/request'
+import axios from '../../../utils/request'
 import BasicTable from './BasicTable'
 import RenderTable from './RenderTable'
 import RadioTable from './RadioTable'
 import CheckTable from './CheckTable'
 import Paginations from './Paginations'
-import Utils from '../../utils/utils'
+import Utils from '../../../utils/utils'
 
 export default class Tables extends Component {
 

@@ -26,7 +26,7 @@ export default class Tables extends Component {
     requestList = () => {
         // const baseUrl = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
         // axios.get(`${baseUrl}/table/list`).then((res) => {
-        //     if (res.status === 200 && res.data.code === 0) {
+        //     if (res.status === 200 && res.data.code === '0') {
         //         console.log(res.data.result,1111)
         //         this.setState({
         //             dataSource2: res.data.result
@@ -43,18 +43,16 @@ export default class Tables extends Component {
                 isShowLoading: true
             }
         }).then(res => {
-            if (res.code === 0) {
-                res.result.list.map((item, index) => item.key = index)
-                this.setState({
-                    dataSource: res.result.list,
-                    selectedRowKeys: [],
-                    selectedRows: null,
-                    pagination: Utils.pagination(res, (current) => {
-                        _this.params.page = current;
-                        _this.requestList()
-                    })
+            res.result.list.map((item, index) => item.key = index)
+            this.setState({
+                dataSource: res.result.list,
+                selectedRowKeys: [],
+                selectedRows: null,
+                pagination: Utils.pagination(res, (current) => {
+                    _this.params.page = current;
+                    _this.requestList()
                 })
-            }
+            })
         })
     };
 

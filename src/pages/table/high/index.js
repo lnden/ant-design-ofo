@@ -30,12 +30,10 @@ export default class Hightable extends Component {
                 isShowLoading: true
             }
         }).then(res => {
-            if (res.code === 0) {
-                res.result.list.map((item, index) => item.key = index)
-                this.setState({
-                    dataSource: res.result.list
-                })
-            }
+            res.result.list.map((item, index) => item.key = index)
+            this.setState({
+                dataSource: res.result.list
+            })
         })
     };
 

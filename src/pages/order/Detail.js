@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card} from 'antd'
-import {requestDetailInfo} from "../../services/order";
+import {getDetailInfo} from "../../services/order";
 
 export default class Detail extends Component {
 
@@ -16,7 +16,7 @@ export default class Detail extends Component {
     }
 
     getDetailInfo(orderId) {
-        requestDetailInfo(orderId).then(res => {
+        getDetailInfo(orderId).then(res => {
             if (res.code === 0) {
                 this.setState({
                     orderInfo: res.result

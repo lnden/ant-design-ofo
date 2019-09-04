@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import { Card, Button, Divider, Modal } from 'antd'
+import { Card, Table, Button, Divider, Modal, message, Form } from 'antd'
 import FilterForm from './FilterForm'
-import Tables from './Tables'
-import { requestDateList, requestDetail, requestFinish } from "../../services/order";
+import columns from './columns'
+import { getList, getDetail, getFinish } from "../../services/order";
 import Utils from "../../utils/utils";
 
+const FormItem = Form.Item;
 export default class Order extends Component {
 
     state = {
-        dataSource: []
+        dataSource: [],
+        orderInfo:{},
+        orderConfirmVisble: false
     }
 
     params = {
@@ -19,20 +22,20 @@ export default class Order extends Component {
         this.requestList()
     }
 
+    // 获取数据列表
     requestList() {
-        requestDateList(this.params, true).then(res => {
-            if (res.code === '0') {
-                res.result.list.map((item, index) => item.key = index);
-                this.setState({
-                    dataSource: res.result.list,
-                    pagination: Utils.pagination(res, (current) => {
-                        this.params.page = current;
-                    })
+        getList(this.params, true).then(res => {
+            res.result.list.map((item, index) => item.key = index);
+            this.setState({
+                dataSource: res.result.list,
+                pagination: Utils.pagination(res, (current) => {
+                    this.params.page = current;
                 })
-            }
+            })
         })
     }
 
+    // 点击订单详情
     handleDetail = () => {
         let item = this.state.selectedItem;
         if (!item) {
@@ -45,8 +48,9 @@ export default class Order extends Component {
         window.open(`/#/order/detail/${item.id}`, '_blank')
     }
 
+    // 点击结束订单
     handleFinish = () => {
-        let item = this.state.selectedItem;
+        let item = this.state.selectedItem || 1;
         if (!item) {
             Modal.info({
                 title: '信息',
@@ -54,17 +58,40 @@ export default class Order extends Component {
             })
             return;
         }
-        requestDetail(this.params).then(res => {
-            if (res.code === '0') {
-                this.setState({
-                    orderInfo: res.result,
-                    orderConfirmVisble: true
-                })
-            }
+        getDetail(this.params).then(res => {
+            this.setState({
+                orderInfo: res.result,
+                orderConfirmVisble: true
+            })
         })
     }
+
+    // 确认结束订单
+    handleFinishOrder = () => {
+        getFinish(this.params).then((res) => {
+            message.success('订单结束成功')
+            this.setState({
+                orderConfirmVisble: false
+            })
+            this.requestList();
+        })
+    }
+
+    onSelectChange = (index, item) => {
+        console.log('获取下标和该行数据：', index, item)
+    }
+
     render() {
-        const { dataSource, pagination } = this.state;
+        const formItemLayout = {
+            labelCol: { span: 5 },
+            wrapperCol: { span: 19 }
+        }
+
+        const { dataSource, pagination, orderConfirmVisble,orderInfo } = this.state;
+        const rowSelection = {
+            type: 'radio',
+            onChange: this.onSelectChange,
+        };
         return (
             <div>
                 <Card>
@@ -73,7 +100,39 @@ export default class Order extends Component {
                     <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
                     <Button type="primary" onClick={this.handleFinish}>结束订单</Button>
                     <Divider type="horizontal" />
-                    <Tables dataSource={dataSource} pagination={pagination} />
+                    <Table
+                        columns={columns}
+                        dataSource={dataSource}
+                        pagination={pagination}
+                        rowSelection={rowSelection}
+                    />
+                    <Modal
+                        title="结束订单"
+                        visible={orderConfirmVisble}
+                        onCancel={() => {
+                            this.setState({
+                                orderConfirmVisble: false
+                            })
+                        }}
+                        onOk={this.handleFinishOrder}
+                        width={600}
+                    >
+                        <Form layout="horizontal">
+                            <FormItem label="车辆编号" {...formItemLayout}>
+                                {orderInfo.bike_sn}
+                            </FormItem>
+                            <FormItem label="剩余电量" {...formItemLayout}>
+                                {orderInfo.battery + '%'}
+                            </FormItem>
+                            <FormItem label="行程开始时间" {...formItemLayout}>
+                                {orderInfo.start_time}
+                            </FormItem>
+                            <FormItem label="当前位置" {...formItemLayout}>
+                                {orderInfo.location}
+                            </FormItem>
+                        </Form>
+
+                    </Modal>
                 </Card>
             </div>
         )

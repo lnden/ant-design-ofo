@@ -1,6 +1,6 @@
 import axios from '../utils/request'
 
-export function requestDateList(params, loading = false) {
+export function getList(params, loading = false) {
     return axios.ajax({
         url: '/order/list',
         data: {
@@ -10,7 +10,7 @@ export function requestDateList(params, loading = false) {
     }).then(res => res)
 }
 
-export function requestDetailInfo(params, loading = false) {
+export function getDetailInfo(params, loading = false) {
     return axios.ajax({
         url: '/order/detail',
         data: {
@@ -20,7 +20,7 @@ export function requestDetailInfo(params, loading = false) {
     }).then(res => res)
 }
 
-export function requestDetail(params, loading = false) {
+export function getDetail(params, loading = false) {
     return axios.ajax({
         url: '/order/ebike_info',
         data: {
@@ -30,7 +30,7 @@ export function requestDetail(params, loading = false) {
 }
 
 
-export function requestFinish(params, loading = false) {
+export function getFinish(params, loading = false) {
     return axios.ajax({
         url: '/order/finish_order',
         data: {

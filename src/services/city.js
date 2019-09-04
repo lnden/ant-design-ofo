@@ -1,6 +1,6 @@
 import axios from '../utils/request'
 
-export function tableDate(params,loading=false) {
+export function getList(params,loading=false) {
     return axios.ajax({
         url: '/open_city',
         data: {
@@ -10,7 +10,7 @@ export function tableDate(params,loading=false) {
     }).then(res => res)
 }
 
-export function openSave(params,loading=false) {
+export function getOpenSave(params,loading=false) {
     return axios.ajax({
         url: '/city/open',
         data: {

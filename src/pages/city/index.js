@@ -4,7 +4,7 @@ import Utils from '../../utils/utils'
 import FilterForm from './FilterForm'
 import OpenCityForm from './OpenCityForm'
 import Tables from './Tables'
-import {tableDate, openSave} from '../../services/city'
+import {getList, getOpenSave} from '../../services/city'
 
 export default class City extends Component {
 
@@ -22,16 +22,14 @@ export default class City extends Component {
     }
 
     requestList() {
-        tableDate(this.params, true).then(res => {
-            if (res.code === 0) {
-                res.result.list.map((item, index) => item.key = index);
-                this.setState({
-                    dataSource: res.result.list,
-                    pagination: Utils.pagination(res, (current) => {
-                        this.params.page = current;
-                    })
+        getList(this.params, true).then(res => {
+            res.result.list.map((item, index) => item.key = index);
+            this.setState({
+                dataSource: res.result.list,
+                pagination: Utils.pagination(res, (current) => {
+                    this.params.page = current;
                 })
-            }
+            })
         })
     }
 
@@ -43,12 +41,10 @@ export default class City extends Component {
     //城市开通提交
     handleSubmit = () => {
         let cityInfo = this.cityForm.props.form.getFieldsValue();
-        openSave(cityInfo).then(res => {
-            if (res.code === 0) {
-                message.success('城市开通成功');
-                this.setState({isShowOpenCity: false});
-                this.requestList()
-            }
+        getOpenSave(cityInfo).then(res => {
+            message.success('城市开通成功');
+            this.setState({isShowOpenCity: false});
+            this.requestList()
         })
     };
 

@@ -26,7 +26,6 @@ export default class Order extends Component {
                 this.setState({
                     dataSource: res.result.list,
                     pagination: Utils.pagination(res, (current) => {
-                        console.log(current,111)
                         this.params.page = current;
                     })
                 })

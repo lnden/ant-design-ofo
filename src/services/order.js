@@ -9,3 +9,14 @@ export function tableDate(params,loading=false) {
         }
     }).then(res => res)
 }
+
+
+export function requestDetailInfo(params,loading=false) {
+    return axios.ajax({
+        url: '/order/detail',
+        data: {
+            params,
+            isShowLoading: loading
+        }
+    }).then(res => res)
+}

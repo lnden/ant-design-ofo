@@ -8,6 +8,7 @@ export default class Axios {
             loading.style.display = 'block';
         }
         const baseApi = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
+        // const baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api"
         return new Promise((resolve, reject) => {
             axios({
                 url: options.url,

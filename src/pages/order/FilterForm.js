@@ -36,6 +36,8 @@ class FilterForm extends Component {
                             />
                         )
                     }
+                </FormItem>
+                <FormItem>
                     {
                         getFieldDecorator('end_time')(
                             <DatePicker
@@ -50,8 +52,8 @@ class FilterForm extends Component {
                         getFieldDecorator('op_mode')(
                             <Select style={{width: 80}} placeholder="全部">
                                 <Option value="">全部</Option>
-                                <Option value="1">自营</Option>
-                                <Option value="2">加盟</Option>
+                                <Option value="1">进行中</Option>
+                                <Option value="2">行程结束</Option>
                             </Select>
                         )
                     }

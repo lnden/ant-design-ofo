@@ -49,11 +49,15 @@ export default class Tables extends Component {
                 dataIndex: 'user_pay'
             }
         ];
+        const rowSelection = {
+            type: 'radio'
+        };
         return (
             <Table
                 columns={columns}
                 dataSource={this.props.dataSource}
                 pagination={this.props.pagination}
+                rowSelection={rowSelection}
             />
         )
     }

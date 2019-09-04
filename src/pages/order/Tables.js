@@ -1,8 +1,13 @@
-import React,{Component} from 'react'
-import {Table} from 'antd'
+import React, { Component } from 'react'
+import { Table } from 'antd'
 
 export default class Tables extends Component {
-    render(){
+
+    onSelectChange = (index, item) => {
+        console.log('获取下标和该行数据：', index, item)
+    }
+
+    render() {
         const columns = [
             {
                 title: '订单编号',
@@ -50,7 +55,8 @@ export default class Tables extends Component {
             }
         ];
         const rowSelection = {
-            type: 'radio'
+            type: 'radio',
+            onChange: this.onSelectChange,
         };
         return (
             <Table

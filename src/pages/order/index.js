@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {Card, Button, Divider} from 'antd'
+import React, { Component } from 'react'
+import { Card, Button, Divider, Modal } from 'antd'
 import FilterForm from './FilterForm'
 import Tables from './Tables'
-import {tableDate} from "../../services/order";
+import { requestDateList, requestDetail, requestFinish } from "../../services/order";
 import Utils from "../../utils/utils";
 
 export default class Order extends Component {
@@ -20,8 +20,8 @@ export default class Order extends Component {
     }
 
     requestList() {
-        tableDate(this.params, true).then(res => {
-            if (res.code === 0) {
+        requestDateList(this.params, true).then(res => {
+            if (res.code === '0') {
                 res.result.list.map((item, index) => item.key = index);
                 this.setState({
                     dataSource: res.result.list,
@@ -33,17 +33,47 @@ export default class Order extends Component {
         })
     }
 
+    handleDetail = () => {
+        let item = this.state.selectedItem;
+        if (!item) {
+            Modal.info({
+                title: '信息',
+                content: '请先选择一条订单'
+            })
+            return;
+        }
+        window.open(`/#/order/detail/${item.id}`, '_blank')
+    }
+
+    handleFinish = () => {
+        let item = this.state.selectedItem;
+        if (!item) {
+            Modal.info({
+                title: '信息',
+                content: '请选择一条订单进行结束'
+            })
+            return;
+        }
+        requestDetail(this.params).then(res => {
+            if (res.code === '0') {
+                this.setState({
+                    orderInfo: res.result,
+                    orderConfirmVisble: true
+                })
+            }
+        })
+    }
     render() {
-        const {dataSource, pagination} = this.state;
+        const { dataSource, pagination } = this.state;
         return (
             <div>
                 <Card>
-                    <FilterForm/>
-                    <Divider type="horizontal"/>
-                    <Button type="primary">订单详情</Button>
-                    <Button type="primary">结束订单</Button>
-                    <Divider type="horizontal"/>
-                    <Tables dataSource={dataSource} pagination={pagination}/>
+                    <FilterForm />
+                    <Divider type="horizontal" />
+                    <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
+                    <Button type="primary" onClick={this.handleFinish}>结束订单</Button>
+                    <Divider type="horizontal" />
+                    <Tables dataSource={dataSource} pagination={pagination} />
                 </Card>
             </div>
         )

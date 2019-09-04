@@ -1,5 +1,5 @@
 import React from 'react';
-import Buttons from './pages/table/high/index.js'
+import Buttons from './pages/order/index.js'
 
 function App() {
     return (

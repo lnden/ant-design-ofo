@@ -50,7 +50,7 @@ export default class Order extends Component {
 
     // 点击结束订单
     handleFinish = () => {
-        let item = this.state.selectedItem || 1;
+        let item = this.state.selectedItem;
         if (!item) {
             Modal.info({
                 title: '信息',
@@ -79,6 +79,15 @@ export default class Order extends Component {
 
     onSelectChange = (index, item) => {
         console.log('获取下标和该行数据：', index, item)
+        this.setState({
+            selectedItem:item
+        })
+    }
+
+
+    searchBtn = (values) => {
+        Object.assign(this.params,values);
+        this.requestList()
     }
 
     render() {
@@ -95,7 +104,7 @@ export default class Order extends Component {
         return (
             <div>
                 <Card>
-                    <FilterForm />
+                    <FilterForm handleSearch={this.searchBtn}/>
                     <Divider type="horizontal" />
                     <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
                     <Button type="primary" onClick={this.handleFinish}>结束订单</Button>
@@ -131,7 +140,6 @@ export default class Order extends Component {
                                 {orderInfo.location}
                             </FormItem>
                         </Form>
-
                     </Modal>
                 </Card>
             </div>

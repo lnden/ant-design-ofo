@@ -4,7 +4,8 @@ import {Table} from 'antd'
 export default class SortTable extends Component {
 
     state = {
-        sortOrder: []
+        // sortOrder: "ascend",
+        sortOrder: "descend"
     };
 
     hanldeChange = (pagination, filters, sorter) => {

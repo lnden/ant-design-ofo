@@ -66,7 +66,7 @@ export default class City extends Component {
                     <Divider type="horizontal"/>
                     <Button type="primary" onClick={this.handleOpenCity}>开通城市</Button>
                     <Divider type="horizontal"/>
-                    <Tables dataSource={dataSource} pagination={pagination}/>
+                    <Tables dataSource={dataSource} pagination={pagination} handleSearch={this.handleSearch}/>
                 </Card>
                 <Modal
                     title="开通城市"

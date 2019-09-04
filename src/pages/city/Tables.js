@@ -3,6 +3,11 @@ import {Table} from 'antd'
 import Utils from "../../utils/utils";
 
 export default class Tables extends Component {
+
+    handleChange = (values) => {
+        this.props.handleSearch()
+    };
+
     render(){
         const columns = [
             {
@@ -60,6 +65,7 @@ export default class Tables extends Component {
                 columns={columns}
                 dataSource={this.props.dataSource}
                 pagination={this.props.pagination}
+                onChange={this.handleChange}
             />
         )
     }

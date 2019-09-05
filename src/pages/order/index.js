@@ -4,6 +4,8 @@ import FilterForm from './FilterForm'
 import columns from './columns'
 import { getList, getDetail, getFinish } from "../../services/order";
 import Utils from "../../utils/utils";
+import BasicForm from '../../components/BaseForm'
+import filterMap from './map'
 
 const FormItem = Form.Item;
 export default class Order extends Component {
@@ -92,6 +94,12 @@ export default class Order extends Component {
         this.requestList()
     }
 
+    handleFilter = (params) =>{
+        console.log(111)
+        // this.params = params;
+        // this.requestList()
+    }
+
     render() {
         const formItemLayout = {
             labelCol: { span: 5 },
@@ -108,6 +116,7 @@ export default class Order extends Component {
             <div>
                 <Card>
                     <FilterForm handleSearch={this.searchBtn}/>
+                    <BasicForm formList={filterMap} filterSubmit={this.handleFilter}/>
                     <Divider type="horizontal" />
                     <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
                     <Button type="primary" onClick={this.handleFinish}>结束订单</Button>

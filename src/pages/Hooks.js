@@ -97,10 +97,10 @@ const myReducer = (state, action) => {
 // useEffect()用来引入具有副作用的操作，最常见的就是向服务器请求数据。
 // 以前，放在componentDidMount里面的代码，现在可以放在useEffect()。
 export function UseEffect() {
-    const [show, setShow] = useState("0");
+    const [show, setShow] = useState("50");
     return (
         <Card title="Hooks-useEffect">
-            <Person pernsonId={show}/>
+            <Person personId={show}/>
             setShow:
             <button onClick={() => setShow("1")}>Add singular</button>
             <button onClick={() => setShow("2")}>Add double</button>
@@ -109,7 +109,6 @@ export function UseEffect() {
 }
 
 const Person = ({personId}) => {
-    console.log(personId)
     const [loading, setLoading] = useState(false);
     const [person, setPerson] = useState({});
 
@@ -119,8 +118,7 @@ const Person = ({personId}) => {
             if (res.ok) {
                 setPerson({
                     name: 'Luck',
-                    singular: 51,
-                    double: 52
+                    count:personId
                 });
                 setLoading(false)
             }
@@ -134,8 +132,7 @@ const Person = ({personId}) => {
     return (
         <div>
             <p>You're viewing: {person.name}</p>
-            <p>单数: {person.singular}</p>
-            <p>双数: {person.double}</p>
+            <p>Count: {person.count}</p>
         </div>
     )
 }

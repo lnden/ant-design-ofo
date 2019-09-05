@@ -17,11 +17,9 @@ export default class Detail extends Component {
 
     getDetailInfo(orderId) {
         getDetailInfo(orderId).then(res => {
-            if (res.code === 0) {
-                this.setState({
-                    orderInfo: res.result
-                })
-            }
+            this.setState({
+                orderInfo: res.result
+            })
         })
     }
 

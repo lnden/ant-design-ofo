@@ -1,10 +1,15 @@
 import React from 'react';
-import Buttons from './pages/order/index.js'
+import {UseState, UseContext, UseReducer, UseEffect} from './pages/Hooks.js'
+import Container from './pages/order/Detail'
 
 function App() {
     return (
         <div className="App">
-            <Buttons/>
+            {/*<Container />*/}
+            <UseState/>
+            <UseContext/>
+            <UseReducer/>
+            <UseEffect />
         </div>
     );
 }

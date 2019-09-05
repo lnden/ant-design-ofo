@@ -11,7 +11,8 @@ export default class Order extends Component {
     state = {
         dataSource: [],
         orderInfo:{},
-        orderConfirmVisble: false
+        orderConfirmVisble: false,
+        selectedRowKeys:[2]
     }
 
     params = {
@@ -78,9 +79,10 @@ export default class Order extends Component {
     }
 
     onSelectChange = (index, item) => {
-        console.log('获取下标和该行数据：', index, item)
+        console.log('获取下标和该行数据：', index, item);
         this.setState({
-            selectedItem:item
+            selectedItem:item,
+            selectedRowKeys:index
         })
     }
 
@@ -96,9 +98,10 @@ export default class Order extends Component {
             wrapperCol: { span: 19 }
         }
 
-        const { dataSource, pagination, orderConfirmVisble,orderInfo } = this.state;
+        const { dataSource, pagination, orderConfirmVisble, orderInfo, selectedRowKeys } = this.state;
         const rowSelection = {
             type: 'radio',
+            selectedRowKeys,
             onChange: this.onSelectChange,
         };
         return (

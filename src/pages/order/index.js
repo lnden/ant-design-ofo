@@ -95,9 +95,9 @@ export default class Order extends Component {
     }
 
     handleFilter = (params) =>{
-        console.log(111)
-        // this.params = params;
-        // this.requestList()
+        console.log(params)
+        this.params = params;
+        this.requestList()
     }
 
     render() {
@@ -116,7 +116,7 @@ export default class Order extends Component {
             <div>
                 <Card>
                     <FilterForm handleSearch={this.searchBtn}/>
-                    <BasicForm formList={filterMap} filterSubmit={this.handleFilter}/>
+                    <BasicForm layout="inline" formList={filterMap} filterSubmit={this.handleFilter}/>
                     <Divider type="horizontal" />
                     <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
                     <Button type="primary" onClick={this.handleFinish}>结束订单</Button>

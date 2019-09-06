@@ -1,5 +1,13 @@
 const formList = [
     {
+        type: "INPUT",
+        label: "模式",
+        field: 'mode',
+        placeholder: "请输入模式",
+        // initialValue: "1",
+        width: 100
+    },
+    {
         type: "SELECT",
         label: "城市",
         field: 'city',
@@ -14,14 +22,14 @@ const formList = [
         ]
     },
     {
-        type: "时间查询",
+        type: "DATEPICKER",
     },
     {
         type: "SELECT",
         label: "订单状态",
         field: 'status',
         placeholder: "全部",
-        initialValue: "1",
+        initialValue: "",
         width: 100,
         list: [
             { id: "0", name: "全部" },
@@ -29,5 +37,5 @@ const formList = [
             { id: "2", name: "结束行程" }
         ]
     }
-]
+];
 export default formList

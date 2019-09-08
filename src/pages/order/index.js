@@ -6,6 +6,7 @@ import { getList, getDetail, getFinish } from "../../services/order";
 import Utils from "../../utils/utils";
 import BasicForm from '../../components/BaseForm'
 import filterMap from './map'
+import axios from '../../utils/request'
 
 const FormItem = Form.Item;
 export default class Order extends Component {
@@ -22,12 +23,14 @@ export default class Order extends Component {
     };
 
     componentDidMount() {
-        this.requestList()
+        // this.requestList()
+        axios.requestList(this,'order/list',this.params,true)
     }
 
     // 获取数据列表
     requestList() {
         getList(this.params, true).then(res => {
+            console.log(res)
             res.result.list.map((item, index) => item.key = index);
             this.setState({
                 dataSource: res.result.list,

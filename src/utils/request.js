@@ -1,14 +1,58 @@
 import axios from 'axios'
 import { Modal } from 'antd';
+// import JsonP from 'jsonp';
+import Utils from './utils'
 
 export default class Axios {
+    static requestList(_this, url, params, isMock) {
+        this.ajax({
+            url,
+            data: { params },
+            isMock
+        }).then(res => {
+            if (res.code === '0') {
+                let list = res.result.list.map((item, index) => {
+                    item.key = index
+                    return item
+                })
+                _this.setState({
+                    dataSource: list,
+                    pagination: Utils.pagination(res, (current) => {
+                        _this.params.page = current;
+                        _this.requestList()
+                    })
+                })
+            }
+        })
+    }
+
+    static jsonp(options) {
+        return new Promise((resolve, reject) => {
+            // JsonP(options.url, {
+            //     param: 'callback',
+
+            // }, function (err, response) {
+            //     if (response.status == 'success') {
+            //         resolve(response)
+            //     } else {
+            //         reject(response.message)
+            //     }
+            // })
+        })
+    }
+
     static ajax(options) {
         let loading = document.getElementById('ajaxLoading');
         if (options.data && options.data.isShowLoading !== false) {
             loading.style.display = 'block';
         }
-        const baseApi = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
-        // const baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api"
+
+        let baseApi = String;
+        if (options.isMock) {
+            baseApi = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
+        } else {
+            baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api"
+        }
         return new Promise((resolve, reject) => {
             axios({
                 url: options.url,

@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Form, Input, Select, Button, Checkbox, DatePicker} from 'antd'
+import React, { Component } from 'react'
+import { Form, Input, Select, Button, Checkbox, DatePicker } from 'antd'
 import Utils from '../../../src/utils/utils'
 
 const FormItem = Form.Item;
@@ -16,12 +16,12 @@ class BaseForm extends Component {
     }
 
     initFormList = () => {
-        const {getFieldDecorator} = this.props.form;
+        const { getFieldDecorator } = this.props.form;
         const formList = this.props.formList;
         const formItemList = []
         if (formList && formList.length > 0) {
             formList.forEach(item => {
-                const {label, field, initialValue = "", placeholder, width} = item;
+                const { label, field, initialValue = "", placeholder, width } = item;
                 switch (item.type) {
                     case "DATEPICKER":
                         const begin_time = <FormItem label="订单时间" key={field}>
@@ -57,7 +57,7 @@ class BaseForm extends Component {
                                     initialValue: initialValue//隐藏此字段下面的placeholder才会展示
                                 })(
                                     <Select
-                                        style={{width: width}}
+                                        style={{ width: width }}
                                         placeholder={placeholder}
                                     >
                                         {Utils.getOptionList(item.list)}
@@ -74,7 +74,7 @@ class BaseForm extends Component {
                                     valuePropName: 'checked',
                                     initialValue: initialValue
                                 })(
-                                    <Checkbox style={{width: width}}>
+                                    <Checkbox style={{ width: width }}>
                                         {label}
                                     </Checkbox>
                                 )
@@ -86,8 +86,8 @@ class BaseForm extends Component {
                         const DATEPICKER = <FormItem label={label} key={field}>
                             {
                                 getFieldDecorator([field])(
-                                    <DatePicker 
-                                        showTime 
+                                    <DatePicker
+                                        showTime
                                         format="YYYY-MM-DD HH:mm:ss"
                                         placeholder="选择时间"
                                     />
@@ -106,7 +106,7 @@ class BaseForm extends Component {
                                     <Input
                                         type="text"
                                         placeholder={placeholder}
-                                        style={{width: width}}
+                                        style={{ width: width }}
                                     />
                                 )
                             }
@@ -121,7 +121,7 @@ class BaseForm extends Component {
 
     render() {
         return (
-            <Form layout={this.props.layout||'horizontal'}>
+            <Form layout={this.props.layout || 'horizontal'}>
                 {this.initFormList()}
                 <FormItem>
                     <Button type="primary" onClick={this.handleFilterSubmit}>查询</Button>

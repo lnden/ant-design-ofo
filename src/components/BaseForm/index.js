@@ -82,6 +82,20 @@ class BaseForm extends Component {
                         </FormItem>
                         formItemList.push(CHECKBOX);
                         break;
+                    case "DATE":
+                        const DATEPICKER = <FormItem label={label} key={field}>
+                            {
+                                getFieldDecorator([field])(
+                                    <DatePicker 
+                                        showTime 
+                                        format="YYYY-MM-DD HH:mm:ss"
+                                        placeholder="选择时间"
+                                    />
+                                )
+                            }
+                        </FormItem>
+                        formItemList.push(DATEPICKER);
+                        break;
                     default:
                     case "INPUT":
                         const INPUT = <FormItem label={label} key={field}>

@@ -6,6 +6,7 @@ import BaseForm from '../../components/BaseForm'
 import BaseTable from '../../components/BaseTable'
 import formList from './map'
 import columns from './columns'
+import moment from 'moment'
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -40,14 +41,69 @@ export default class User extends Component {
 
     // 功能区操作
     handleOperate = (type) => {
+        let item = this.state.selectedItem;
         switch(type){
             case 'create':
                 this.setState({
                     type,
                     isVisible:true,
                     title:'创建员工'
+                });break;
+            case 'edit':
+                if(!item){
+                    Modal.info({
+                        title:'提示',
+                        content:'请选择一个用户'
+                    });
+                    return
+                }
+                this.setState({
+                    type,
+                    isVisible:true,
+                    title:'编辑员工',
+                    userInfo:item
+                });break;
+            case 'detail':
+                this.setState({
+                    type,
+                    isVisible:true,
+                    title:'员工详情',
+                    userInfo:item
+                });break;
+            default:
+                if(!item){
+                    Modal.info({
+                        title:'提示',
+                        content:'请选择一个用户'
+                    });
+                    return
+                }
+
+                Modal.confirm({
+                    title:'确认删除',
+                    content:'是否要删除当前选中的员工',
+                    onOk:()=>this.handleOkDelete()
                 })
         }
+    };
+
+    handleOkDelete = () => {
+        let item = this.state.selectedItem;
+        axios.ajax({
+            url:'user/delete',
+            data:{
+                params:{
+                    id:item.id
+                }
+            }
+        }).then(res=>{
+            if(res.code==0){
+                this.seState({
+                    isVisible:false,
+                })
+                this.requestList()
+            }
+        })
     };
 
     // 创建员工提交
@@ -55,7 +111,7 @@ export default class User extends Component {
         let type = this.state.type;
         let data = this.userForm.props.form.getFieldsValue();
         axios.ajax({
-            url:'user/create',
+            url: type==='create'?'user/create':'user/edit ',
             data:{
                 params:data
             }
@@ -72,7 +128,12 @@ export default class User extends Component {
 
     render() {
         const { dataSource,title,isVisible } = this.state;
-        console.log(dataSource,22222)
+        let footer = {};
+        if(this.state.type==='detail'){
+            footer = {
+                footer:null
+            }
+        }
         return (
             <Card title="员工管理">
                 <BaseForm layout="inline" formList={formList} filterSubmit={this.handleFilter} />
@@ -97,8 +158,9 @@ export default class User extends Component {
                         this.setState({isVisible:false})
                     }}
                     width={600}
+                    {...footer}
                 >
-                    <UserForm wrappedComponentRef={(inst)=>this.userForm = inst}/>
+                    <UserForm type={this.state.type} userInfo={this.state.userInfo} wrappedComponentRef={(inst)=>this.userForm = inst}/>
                 </Modal>
             </Card>
         )
@@ -106,7 +168,16 @@ export default class User extends Component {
 }
 
 class UserForm extends Component {
+    getState = (state) => {
+        return {
+            "1":"咸鱼一条",
+            "2":"风华浪子",
+            "3":"北大才子"
+        }[state]
+    }
     render(){
+        let type = this.props.type;
+        let userInfo = this.props.userInfo || {};
         const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
             labelCol:{span:5},
@@ -116,7 +187,10 @@ class UserForm extends Component {
             <Form layout="horizontal">
                 <FormItem label="用户名" {...formItemLayout}>
                     {
-                        getFieldDecorator('user_name')(
+                        type === 'detail'?userInfo.username:
+                        getFieldDecorator('user_name',{
+                            initialValue:userInfo.username
+                        })(
                             <Input type="text" placeholder="请输入用户名"/>
                         )
                     }
@@ -124,7 +198,10 @@ class UserForm extends Component {
 
                 <FormItem label="性别" {...formItemLayout}>
                     {
-                        getFieldDecorator('sex')(
+                        type === 'detail'?userInfo.sex == 1 ? '男':'女':
+                        getFieldDecorator('sex',{
+                            initialValue:userInfo.sex
+                        })(
                             <RadioGroup>
                                 <Radio value={1}>男</Radio>
                                 <Radio value={2}>女</Radio>
@@ -135,7 +212,10 @@ class UserForm extends Component {
 
                 <FormItem label="状态" {...formItemLayout}>
                     {
-                        getFieldDecorator('state')(
+                        type === 'detail'?this.getState(userInfo.state):
+                        getFieldDecorator('state',{
+                            initialValue:userInfo.state
+                        })(
                             <Select>
                                 <Option value={1}>咸鱼一条</Option>
                                 <Option value={2}>风华浪子</Option>
@@ -147,7 +227,10 @@ class UserForm extends Component {
 
                 <FormItem label="生日" {...formItemLayout}>
                     {
-                        getFieldDecorator('birthday')(
+                        type === 'detail'?userInfo.birthday:
+                        getFieldDecorator('birthday',{
+                            initialValue:moment(userInfo.birthday)
+                        })(
                             <DatePicker />
                         )
                     }
@@ -155,7 +238,10 @@ class UserForm extends Component {
 
                 <FormItem label="联系地址" {...formItemLayout}>
                     {
-                        getFieldDecorator('address')(
+                        type === 'detail'?userInfo.address:
+                        getFieldDecorator('address',{
+                            initialValue:userInfo.address
+                        })(
                             <TextArea rows={2} placeholder="请输入联系地址"/>
                         )
                     }

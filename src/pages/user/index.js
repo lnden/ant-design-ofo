@@ -3,7 +3,9 @@ import { Card, Button } from 'antd'
 import axios from '../../utils/request'
 import Utils from '../../utils/utils'
 import BaseForm from '../../components/BaseForm'
+import BaseTable from '../../components/BaseTable'
 import formList from './map'
+import columns from './columns'
 
 export default class User extends Component {
 
@@ -13,10 +15,24 @@ export default class User extends Component {
         selectedRowKeys:'',
         selectedItem:[]
     }
+
+    params = {
+        page: 1
+    }
+
     handleFilter = (params) => {
         console.log('请求数据')
         // this.params = params;
         // this.requestList()
+    }
+
+    componentDidMount(){
+        this.requestList()
+    }
+
+    requestList = () => {
+        console.log(111)
+        axios.requestList(this,'order/list',this.params,true)
     }
 
     render() {
@@ -25,12 +41,10 @@ export default class User extends Component {
             <Card title="员工管理">
                 <BaseForm layout="inline" formList={formList} filterSubmit={this.handleFilter} />
                 <BaseTable
-                    updateSelectedItem={}
+                    updateSelectedItem={Utils.updateSelectedItem.bind(this)}
                     columns={columns}
                     dataSource={dataSource}
-                    selectedRowKeys={selectedRowKeys}
-                    selectedItem={selectedItem}
-                    pagination={pagination}
+                    pagination={false}
                 />
             </Card>
         )

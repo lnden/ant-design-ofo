@@ -15,6 +15,7 @@ export default class Axios {
                     item.key = index
                     return item
                 })
+                console.log(JSON.stringify(list),11)
                 _this.setState({
                     dataSource: list,
                     pagination: Utils.pagination(res, (current) => {
@@ -48,10 +49,12 @@ export default class Axios {
         }
 
         let baseApi = String;
+        console.log(options.isMock,'是否使用mock')
         if (options.isMock) {
             baseApi = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
         } else {
             baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api"
+            // baseApi = "http://localhost:3000/mock-api/pages/user/list.json"
         }
         return new Promise((resolve, reject) => {
             axios({

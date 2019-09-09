@@ -53,12 +53,12 @@ export default class Axios {
         if (options.isMock) {
             baseApi = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
         } else {
-            baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api"
-            // baseApi = "http://localhost:3000/mock-api/pages/user/list.json"
+            // baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api"
+            baseApi = "http://localhost:3000/mock-api/pages/"
         }
         return new Promise((resolve, reject) => {
             axios({
-                url: options.url,
+                url: options.isMock?options.url:`${options.url}.json`,
                 method: 'get',
                 baseURL: baseApi,
                 timeout: 5000,
@@ -69,7 +69,7 @@ export default class Axios {
                 }
                 if (response.status === 200) {
                     let res = response.data;
-                    if (res.code === '0') {
+                    if (res.code === 0) {
                         resolve(res)
                     } else {
                         Modal.info({

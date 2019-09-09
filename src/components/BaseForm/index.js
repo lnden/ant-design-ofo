@@ -89,7 +89,7 @@ class BaseForm extends Component {
                                     <DatePicker
                                         showTime
                                         format="YYYY-MM-DD HH:mm:ss"
-                                        placeholder="选择时间"
+                                        placeholder={placeholder}
                                     />
                                 )
                             }

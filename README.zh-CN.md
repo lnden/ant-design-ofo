@@ -15,3 +15,7 @@ yarn add antd --save
 yarn add moment --save
 yarn add axios --save
 ```
+
+### Feature
+
+该项目使用 Easy-mock 模拟前端数据，由于mock数据服务器不稳定，所以把请求内容存放在public/api/目录下，请求添加isMock来区分是否使用mock数据。如果不使用mock数据，请求本地数据，已经在request方法内增加优化 `options.isMock?options.url:options.url+'.json'`

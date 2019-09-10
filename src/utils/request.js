@@ -10,12 +10,11 @@ export default class Axios {
             data: { params },
             isMock
         }).then(res => {
-            if (res.code === '0') {
+            if (res.code === 0) {
                 let list = res.result.list.map((item, index) => {
                     item.key = index
                     return item
                 })
-                console.log(JSON.stringify(list),11)
                 _this.setState({
                     dataSource: list,
                     pagination: Utils.pagination(res, (current) => {

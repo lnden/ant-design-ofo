@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Card } from 'antd'
+import themeLight from '../themeLight'
 
 // 导入核心库
 import echarts from 'echarts/lib/echarts'
@@ -14,7 +15,7 @@ import ReactEcharts from 'echarts-for-react'
 export default class Pie extends Component {
 
     componentWillMount() {
-
+        echarts.registerTheme('Imooc',themeLight);
     }
 
     getOption = () => {
@@ -112,8 +113,6 @@ export default class Pie extends Component {
                 {
                     name: '订单量',
                     type: 'pie',
-                    radius: ['40%', '60%'],// 1.内圆和外圆的占比
-                    center: ['30%', '60%'],// 2.修改饼图的位置  
                     data: [
                         { value: 1000, name: '周一' },
                         { value: 1000, name: '周二' },
@@ -122,7 +121,8 @@ export default class Pie extends Component {
                         { value: 3000, name: '周五' },
                         { value: 2000, name: '周六' },
                         { value: 1200, name: '周日' }
-                    ]
+                    ].sort((a,b)=>{return a.value-b.value}),
+                    roseType:'radius'
                 }
             ]
         }
@@ -133,13 +133,21 @@ export default class Pie extends Component {
         return (
             <div>
                 <Card title="饼图一">
-                    <ReactEcharts option={this.getOption()} style={{ height: 500 }} />
+                    <ReactEcharts
+                        option={this.getOption()}
+                        theme="Imooc"
+                        style={{ height: 500 }} />
                 </Card>
                 <Card title="饼图二">
-                    <ReactEcharts option={this.getOption2()} style={{ height: 500 }} />
+                    <ReactEcharts
+                        option={this.getOption2()}
+                        theme="Imooc"
+                        style={{ height: 500 }} />
                 </Card>
                 <Card title="饼图三">
-                    <ReactEcharts option={this.getOption3()} style={{ height: 500 }} />
+                    <ReactEcharts
+                        option={this.getOption3()}
+                        style={{ height: 500 }} />
                 </Card>
             </div>
         )

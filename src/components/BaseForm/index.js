@@ -24,7 +24,7 @@ class BaseForm extends Component {
                 const { label, field, initialValue = "", placeholder, width } = item;
                 switch (item.type) {
                     case "DATEPICKER":
-                        const begin_time = <FormItem label="订单时间" key={field}>
+                        const begin_time = <FormItem label="订单时间" key="begin_time">
                             {
                                 getFieldDecorator(['begin_time'])(
                                     <DatePicker
@@ -37,7 +37,7 @@ class BaseForm extends Component {
                         </FormItem>
                         formItemList.push(begin_time)
 
-                        const end_time = <FormItem label="~" colon={false} key={field}>
+                        const end_time = <FormItem label="~" colon={false} key="end_time">
                             {
                                 getFieldDecorator(['end_time'])(
                                     <DatePicker
@@ -49,11 +49,12 @@ class BaseForm extends Component {
                             }
                         </FormItem>
                         formItemList.push(end_time);
+
                         break;
                     case "SELECT":
                         const SELECT = <FormItem label={label} key={field}>
                             {
-                                getFieldDecorator([field], {
+                                getFieldDecorator(field, {
                                     initialValue: initialValue//隐藏此字段下面的placeholder才会展示
                                 })(
                                     <Select
@@ -100,7 +101,7 @@ class BaseForm extends Component {
                     case "INPUT":
                         const INPUT = <FormItem label={label} key={field}>
                             {
-                                getFieldDecorator([field], {
+                                getFieldDecorator(field, {
                                     initialValue: initialValue
                                 })(
                                     <Input

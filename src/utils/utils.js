@@ -25,8 +25,8 @@ export default {
     getOptionList(data) {
         if (!data) { return [] }
         let options = []
-        data.map((item) => {
-            options.push([<Option value={item.id} key={item.id}>{item.name}</Option>])
+        data.forEach((item) => {
+            options.push([<Option value={item.id} key={item.id+Math.random()}>{item.name}</Option>])
         })
         return options
     },

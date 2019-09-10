@@ -49,7 +49,6 @@ export default class Axios {
         }
 
         let baseApi = String;
-        console.log(options.isMock,'是否使用mock')
         if (options.isMock) {
             baseApi = "https://www.easy-mock.com/mock/5d5ec2393da1210743354970/v1"
         } else {

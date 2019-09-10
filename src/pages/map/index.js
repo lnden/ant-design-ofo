@@ -80,7 +80,7 @@ export default class Map extends Component {
             strokeWeight:2,
             strokeOpacity:1
         });
-        this.map.addOverlay(polyLine)
+        this.map.addOverlay(polyLine);
 
 
         // 绘制服务区
@@ -88,14 +88,26 @@ export default class Map extends Component {
         let serviceList = res.service_list;
         serviceList.forEach((item)=>{
             servicePointList.push(new window.BMap.Point(item.lon,item.lat))
-        })
+        });
         let serviceLine = new window.BMap.Polyline(servicePointList,{
             strokeColor:"#090",
             strokeWeight:2,
             strokeOpacity:1
-        })
-        this.map.addOverlay(serviceLine)
+        });
+        this.map.addOverlay(serviceLine);
 
+        // 添加地中的自行车图标
+        let bikeList = res.bike_list;
+        let bikeIcon = new window.BMap.Icon('/assets/bike.jpg',new window.BMap.Size(36,42),{
+            imageSize:new window.BMap.Size(36,42),
+            anchor: new window.BMap.Size(18, 42)
+        });
+        bikeList.forEach((item)=>{
+            let p = item.split(',');
+            let point = new window.BMap.Point(p[0],p[1]);
+            let bikeMarker = new window.BMap.Marker(point,{icon:bikeIcon});
+            this.map.addOverlay(bikeMarker);
+        })
 
     };
 

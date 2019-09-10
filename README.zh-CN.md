@@ -17,6 +17,7 @@
     - user // 复用模式完成 查询、功能、列表
     - map // 使用BMap创建地点、线路、区域
     - charts //使用echarts创建 bar、pie、line
+    - rich //使用富文本编辑器，并且转换为html输出
 
  
 
@@ -27,6 +28,7 @@ yarn add antd --save
 yarn add moment --save
 yarn add axios --save
 yarn add echarts-for-react echarts --save
+yarn add react-draft-wysiwyg draftjs-to-html --save
 ```
 
 ### Feature

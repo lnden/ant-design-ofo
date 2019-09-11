@@ -32,6 +32,7 @@ yarn add react-draft-wysiwyg draftjs-to-html --save
 yarn add react-router-dom --save
 yarn node-sass sass-loader --save
 yarn less less-loader --save
+yarn babel-plugin-import --save
 ```
 
 ### Feature
@@ -61,3 +62,8 @@ yarn less less-loader --save
 create-react-app构建项目应用使用sass方法
 首先需要安装node-sass sass-loader 从新启动项目就可以使用sass文件了
 首先需要安装 less less-loader 配置对应的文件config/webpack.config.js,具体查看commit提交记录
+
+- 按需加载antd样式
+
+修改less文件两种方式一种是在eject之前使用官方推荐的方式，使用的是官方推荐的 高级配置、babel-plugin-import 使用插件去修改
+另外一种方式是在npm run eject 之后修改配置文件，社区自行探索。安装 babel-plugin-import 修改 webpack.config 配置文件，详情见内注解

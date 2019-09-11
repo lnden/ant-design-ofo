@@ -45,11 +45,13 @@ const imageInlineSizeLimit = parseInt(
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // style files regexes
-const cssRegex = /\.css|less$/;
-const cssModuleRegex = /\.module\.(css|less)$/;
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.(css)$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
-
+const lessRegex = /\.less/;
+const lessModuleRegex = /\.module\.less/;
+const theme = require('../src/config/theme');
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
@@ -114,6 +116,19 @@ module.exports = function(webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
+      // https://blog.csdn.net/qwe502763576/article/details/83242823
+      let loader = {
+        loader: require.resolve(preProcessor),
+        options: {
+            sourceMap: true,
+        },
+      };
+      // add javascriptEnabled and modifyVars if sass is page will error!
+      if (preProcessor === "less-loader") {
+          loader.options.modifyVars = theme;
+          // https://github.com/ant-design/ant-motion/issues/44
+          loader.options.javascriptEnabled = true;
+      }
       loaders.push(
         {
           loader: require.resolve('resolve-url-loader'),
@@ -121,12 +136,7 @@ module.exports = function(webpackEnv) {
             sourceMap: isEnvProduction && shouldUseSourceMap,
           },
         },
-        {
-          loader: require.resolve(preProcessor),
-          options: {
-            sourceMap: true,
-          },
-        }
+          loader
       );
     }
     return loaders;
@@ -373,6 +383,10 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  [
+                      "import",
+                      {libraryName: "antd", style: true} // 移动端添加 "libraryName": "antd-mobile"
+                  ] //antd按需加载
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -457,6 +471,19 @@ module.exports = function(webpackEnv) {
               // Remove this when webpack adds a warning or an error for this.
               // See https://github.com/webpack/webpack/issues/6571
               sideEffects: true,
+            },
+            // todo 2019-09-11 add less config
+            {
+                test: lessRegex,
+                exclude: lessModuleRegex,
+                use: getStyleLoaders(
+                    {
+                        importLoaders: 2,
+                        sourceMap: isEnvProduction && shouldUseSourceMap,
+                    },
+                    'less-loader'
+                ),
+                sideEffects: true,
             },
             // Adds support for CSS Modules, but using SASS
             // using the extension .module.scss or .module.sass

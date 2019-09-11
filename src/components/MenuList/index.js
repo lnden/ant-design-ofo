@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Menu, Icon} from 'antd'
+import {Menu} from 'antd'
 import menuList from '../../config/menuConfig'
 import './index.less'
 
@@ -9,7 +9,7 @@ const MenuItem = Menu.Item;
 export default class MenuList extends Component {
 
     state = {
-        menuTreeNode:null
+        menuTreeNode: null
     };
 
     componentWillMount() {

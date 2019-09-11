@@ -33,6 +33,7 @@ yarn add react-router-dom --save
 yarn node-sass sass-loader --save
 yarn less less-loader --save
 yarn babel-plugin-import --save
+yarn add jsonp --save
 ```
 
 ### Feature

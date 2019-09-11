@@ -18,7 +18,7 @@
     - map // 使用BMap创建地点、线路、区域
     - charts //使用echarts创建 bar、pie、line
     - rich //使用富文本编辑器，并且转换为html输出
-
+    - permission //权限设置 用户-角色-权限
  
 
 ### Depend
@@ -29,6 +29,9 @@ yarn add moment --save
 yarn add axios --save
 yarn add echarts-for-react echarts --save
 yarn add react-draft-wysiwyg draftjs-to-html --save
+yarn add react-router-dom --save
+yarn node-sass sass-loader --save
+yarn less less-loader --save
 ```
 
 ### Feature
@@ -53,3 +56,8 @@ yarn add react-draft-wysiwyg draftjs-to-html --save
 - permission Tree question
 
 两种方式渲染树结构，一种是后台返回所有的树结构，另一种方式前端自定义好数据渲染，该项目使用本地定义列表。
+
+- 使用sass或者less 
+create-react-app构建项目应用使用sass方法
+首先需要安装node-sass sass-loader 从新启动项目就可以使用sass文件了
+首先需要安装 less less-loader 配置对应的文件config/webpack.config.js,具体查看commit提交记录

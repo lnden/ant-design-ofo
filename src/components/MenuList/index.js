@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Menu} from 'antd'
+import {NavLink} from 'react-router-dom'
 import menuList from '../../config/menuConfig'
 import './index.less'
 
@@ -28,7 +29,11 @@ export default class MenuList extends Component {
                         </SubMenu>
                     )
                 } else {
-                    return <MenuItem key={item.key}><span>{item.title}</span></MenuItem>
+                    return (
+                        <MenuItem key={item.key}>
+                            <NavLink to={item.key}>{item.title}</NavLink>
+                        </MenuItem>
+                    )
                 }
             })
         }

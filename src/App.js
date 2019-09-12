@@ -1,9 +1,9 @@
 import React from 'react';
-import './index.css';
+import './index.less';
 
 function App(props) {
     return (
-        <div className="App">
+        <div>
             {props.children}
         </div>
     );

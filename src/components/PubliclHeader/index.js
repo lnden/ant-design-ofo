@@ -41,7 +41,7 @@ export default class PublicHeader extends Component {
             <header className="header">
                 <Row className="header-top">
                     <Col span={24}>
-                        <span>欢迎，河畔一角</span>
+                        <span>Hello world</span>
                         <a href="/login">退出</a>
                     </Col>
                 </Row>

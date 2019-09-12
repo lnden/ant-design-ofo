@@ -3,6 +3,8 @@ import {HashRouter, Route, Switch} from 'react-router-dom'
 import App from './App'
 
 import Admin from './admin'
+
+import Home from './pages/home'
 import Buttons from './pages/ui/buttons'
 import Carousels from './pages/ui/carousels'
 import Modals from './pages/ui/modals'
@@ -42,6 +44,7 @@ export default class Router extends Component {
                         <Route path="/login" component={Login}/>
                         <Route path="/" render={()=>
                             <Admin>
+                                <Route path="/home" component={Home}/>
                                 <Route path="/ui/buttons" component={Buttons}/>
                                 <Route path="/ui/carousel" component={Carousels}/>
                                 <Route path="/ui/modals" component={Modals}/>

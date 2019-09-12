@@ -1,15 +1,10 @@
 import React from 'react';
-import {UseState, UseContext, UseReducer, UseEffect} from './pages/Hooks.js'
-import Container from './pages/order/Detail'
+import './index.css';
 
-function App() {
+function App(props) {
     return (
         <div className="App">
-            {/*<Container />*/}
-            <UseState/>
-            <UseContext/>
-            <UseReducer/>
-            <UseEffect />
+            {props.children}
         </div>
     );
 }

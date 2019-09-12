@@ -165,11 +165,11 @@ class Register extends Component {
                                     initialValue: '北京市昌平区'
                                 })(< TextArea
                                     autosize={
-                                        {
-                                            minRows: 4,
-                                            maxRows: 6
-                                        }
-                                        //rowObject
+                                        // {
+                                        //     minRows: 4,
+                                        //     maxRows: 6
+                                        // }
+                                        rowObject
                                     }
                                 />
                                 )
@@ -197,7 +197,7 @@ class Register extends Component {
                                         action="//jsonplaceholder.typicode.com/posts/"
                                         onChange={this.handleChange}
                                     >
-                                        {this.state.userImg ? <img src={this.state.userImg} /> : <Icon type="plus" />}
+                                        {this.state.userImg ? <img src={this.state.userImg} alt="avatar"/> : <Icon type="plus" />}
                                     </Upload>
                                 )
                             }
@@ -208,7 +208,7 @@ class Register extends Component {
                                     valuePropName: 'checked',
                                     initialValue: true
                                 })(
-                                    <Checkbox>我已阅读过<a href="#">网站协议</a></Checkbox>
+                                    <Checkbox>我已阅读过<a href="http://taobao.com">网站协议</a></Checkbox>
                                 )
                             }
                         </FormItem>

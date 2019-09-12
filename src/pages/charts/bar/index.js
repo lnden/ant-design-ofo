@@ -3,8 +3,6 @@ import { Card } from 'antd'
 // 导入所有echarts
 // import echarts from 'echarts'
 
-// 按需加载,导入核心库
-import echarts from 'echarts/lib/echarts'
 // 导入柱形图
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
@@ -15,10 +13,6 @@ import 'echarts/lib/component/markPoint'
 import ReactEcharts from 'echarts-for-react'
 
 export default class Bar extends Component {
-
-    componentWillMount() {
-        // echarts.registerTheme('Imooc',echartTheme)
-    }
 
     getOption = () => {
         let option = {

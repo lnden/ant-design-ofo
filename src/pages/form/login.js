@@ -66,7 +66,7 @@ class Login extends Component {
                                     <Checkbox>记住密码</Checkbox>//checkbox添加默认值比较特殊，需要如上两个属性
                                 )
                             }
-                            <a href="#" style={{ float: 'right' }}>忘记密码</a>
+                            <a href="http://www.baidu.com" style={{ float: 'right' }}>忘记密码</a>
                         </FormItem>
                         <FormItem>
                             <Button type="primary" onClick={this.handleSubmit}>登录</Button>

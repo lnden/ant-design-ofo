@@ -97,7 +97,7 @@ export default class User extends Component {
                 }
             }
         }).then(res=>{
-            if(res.code==0){
+            if(res.code===0){
                 this.seState({
                     isVisible:false,
                 })
@@ -198,7 +198,7 @@ class UserForm extends Component {
 
                 <FormItem label="性别" {...formItemLayout}>
                     {
-                        type === 'detail'?userInfo.sex == 1 ? '男':'女':
+                        type === 'detail'?userInfo.sex === 1 ? '男':'女':
                         getFieldDecorator('sex',{
                             initialValue:userInfo.sex
                         })(

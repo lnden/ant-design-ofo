@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {Row, Col} from 'antd'
+import {connect} from 'react-redux'
 import './index.less'
 import Util from '../../utils/utils';
 import axios from '../../utils/request'
 
-export default class PublicHeader extends Component {
+class PublicHeader extends Component {
     state = {
         clear: null,
         sysTime: Util.formateDate(new Date().getTime()),
@@ -37,6 +38,7 @@ export default class PublicHeader extends Component {
     };
 
     render() {
+        const {menuName} = this.props;
         return (
             <header className="header">
                 <Row className="header-top">
@@ -47,7 +49,7 @@ export default class PublicHeader extends Component {
                 </Row>
                 <Row className="breadcrumb">
                     <Col span={4} className="breadcrumb-title">
-                        首页
+                        {menuName || '首页'}
                     </Col>
                     <Col span={20} className="weather">
                         <span className="date">{this.state.sysTime}</span>
@@ -63,3 +65,11 @@ export default class PublicHeader extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        menuName: state.menuName
+    }
+};
+export default connect(mapStateToProps)(PublicHeader)

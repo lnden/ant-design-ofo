@@ -4,10 +4,40 @@
   .menu-left {
     height: calc(100vh);
     background: #001529;
+    overflow: auto;
+    /*
+     * 滚动条样式
+     */
+    &::-webkit-scrollbar {
+      width: 0.36rem;
+      background: #f00;
+    }
+    /*
+     * 滚动条轨道
+    */
+    &::-webkit-scrollbar-track {
+      border-radius: 15px;
+      background: #009;
+    }
+    /*
+     * 滚动条样式
+     *    1.上下两端的圆角,正常应该设置为0.8rem
+     *    2.滚动条颜色设置
+     *    3.滚动条阴影设置
+     */
+    &::-webkit-scrollbar-thumb {
+      border-radius: 15px;
+      background: #ff0;
+    }
+    /*滚动条的上下两端的按钮,正常应该设置为0px*/
+    &::-webkit-scrollbar-button {
+      height: 10px;
+    }
   }
   .main {
     height: calc(100vh);
     background: @colorL;
+    overflow: auto
   }
   .content {
     position: relative;

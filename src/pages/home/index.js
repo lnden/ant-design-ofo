@@ -6,7 +6,8 @@ export default class Home extends Component {
 
     handleClick = () => {
         // window.location.href =`/#/common/roder/detail/${1}`;
-        window.open(`/#/common/order/detail/${1}`,'_blank');
+        // window.open(`/#/common/order/detail/${1}`,'_blank');
+        this.props.history.push(`/common/order/detail/${1}`)
     }
 
     render(){

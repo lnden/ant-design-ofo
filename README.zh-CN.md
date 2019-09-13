@@ -8,6 +8,19 @@
 
 ### Catalogue
 
+- components
+    - BaseForm //表单封装
+    - BaseTable //表格封装
+    - MenuList //路由列表
+    - PublicFooter //公共页脚
+    - PublicHeader //公共页头
+- config
+    - constant //常量定义
+    - menuConfig //映射的路由列表[可由后台返回]
+    - theme //ant-design主题色更换
+- layout
+    - BasicLayout //基础布局
+    - PublicLayout //公共布局
 - pages
     - ui // 存入 ant-design 一些UI组件
     - form // antd 表单基础使用
@@ -19,6 +32,20 @@
     - charts //使用echarts创建 bar、pie、line
     - rich //使用富文本编辑器，并且转换为html输出
     - permission //权限设置 用户-角色-权限
+    - login //登录页面预备
+    - home //首页，使用两用样式方式sass、less
+    - reouter-dom //react-router-dom demo
+- services
+    - city //城市管理接口
+    - order //订单管理接口
+- styles
+    - common //公共样式，布局样式
+    - default //antd默认样式
+    - loading //全局loading动效
+- utils
+    - filter //常量过滤
+    - request //请求封装
+    - utils //公共方法
  
 
 ### Depend
@@ -43,7 +70,7 @@ yarn add jsonp --save
 #### echarts
 - 全部引入、按需引入
 - 设置主题色
-- 使用 echarts-for-react 应用echarts
+- 使用 echarts-for-react 应用 echarts
 
 #### permission
 
@@ -62,9 +89,9 @@ yarn add jsonp --save
 - 使用sass或者less 
 create-react-app构建项目应用使用sass方法
 首先需要安装node-sass sass-loader 从新启动项目就可以使用sass文件了
-首先需要安装 less less-loader 配置对应的文件config/webpack.config.js,具体查看commit提交记录
+首先需要安装 less less-loader 配置对应的文件config/webpack.config.js,具体查看commit提交记录e0b1a8
 
 - 按需加载antd样式
 
 修改less文件两种方式一种是在eject之前使用官方推荐的方式，使用的是官方推荐的 高级配置、babel-plugin-import 使用插件去修改
-另外一种方式是在npm run eject 之后修改配置文件，社区自行探索。安装 babel-plugin-import 修改 webpack.config 配置文件，详情见内注解
+另外一种方式是在npm run eject 之后修改配置文件，社区自行探索。安装 babel-plugin-import 修改 webpack.config 配置文件，详情见内注解commit记录a5e0fb

@@ -51,6 +51,7 @@ export default class Router extends Component {
                         <Route path="/" render={()=>
                             <BasicLayout>
                                 <Switch>
+                                    {/* <Route exact path="/" component={Home}/> */}
                                     <Route path="/home" component={Home}/>
                                     <Route path="/ui/buttons" component={Buttons}/>
                                     <Route path="/ui/carousel" component={Carousels}/>

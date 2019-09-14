@@ -16,7 +16,8 @@ export function getDetailInfo(params, loading = false) {
         data: {
             params,
             isShowLoading: loading
-        }
+        },
+        isMock: true
     }).then(res => res)
 }
 

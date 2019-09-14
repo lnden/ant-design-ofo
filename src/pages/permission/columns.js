@@ -25,7 +25,7 @@ const columns = [
     },
     {
         title: '授权人',
-        dataIndex: 'user_name'
+        dataIndex: 'authorize_user_name'
     }
 ];
 

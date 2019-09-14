@@ -27,16 +27,16 @@ export default class User extends Component {
     }
 
     handleFilter = (params) => {
-        // this.params = params;
-        // this.requestList()
+        this.params = params;
+        this.requestList()
     };
 
     componentDidMount(){
-        // this.requestList()
+        this.requestList()
     }
 
     requestList = () => {
-        axios.requestList(this,'order/list',this.params,true)
+        axios.requestList(this,'user/list',this.params,true)
     };
 
     // 功能区操作
@@ -111,7 +111,7 @@ export default class User extends Component {
         let type = this.state.type;
         let data = this.userForm.props.form.getFieldsValue();
         axios.ajax({
-            url: type==='create'?'user/create':'user/edit ',
+            url: type==='create'?'user/create':'user/edit',
             data:{
                 params:data
             }

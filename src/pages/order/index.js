@@ -51,7 +51,7 @@ export default class Order extends Component {
             })
             return;
         }
-        window.open(`/#/order/detail/${item.id}`, '_blank')
+        window.open(`/#/common/order/detail/${item.id}`,'_blank');
     }
 
     // 点击结束订单

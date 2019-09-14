@@ -26,7 +26,7 @@ export default class Permission extends Component {
     }
 
     requestList() {
-        axios.requestList(this, '/permission/list', {}, false)
+        axios.requestList(this, '/permission/list', {}, true)
     }
 
     // 打开创建角色弹框
@@ -111,7 +111,7 @@ export default class Permission extends Component {
 
     getRoleUserList = (id) => {
         axios.ajax({
-            url:'role/user_liat',
+            url:'permission/user_list',
             data:{
                 params:{id}
             },
@@ -153,12 +153,13 @@ export default class Permission extends Component {
         data.user_ids = this.state.targetKeys;
         data.role_id = this.state.selectedItem.id;
         axios.ajax({
-            url:'role/user_role_edit',
+            url:'permission/user_role_edit',
             data:{
                 params:{
                     ...data
                 }
-            }
+            },
+            isMock: true
         }).then(res=>{
             if(res.code===0){
                 this.setState({isAuthorizeVisible:false})

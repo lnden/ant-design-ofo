@@ -1,18 +1,21 @@
 import React, {Component} from 'react'
 import {Menu} from 'antd'
 import {NavLink} from 'react-router-dom'
+import { connect } from 'react-redux'
 import menuList from '../../config/menuConfig'
+import { switchMenu } from '../../redux/action'
 import './index.less'
 
 const {SubMenu} = Menu;
 const MenuItem = Menu.Item;
 
-export default class MenuList extends Component {
+class MenuList extends Component {
 
     state = {
         menuTreeNode: null,
         selectedKeys:[''],// '/ul/buttons'
-        defaultKey:['']// '/ul'
+        defaultKey:[''],// '/ul'
+        currentKey:''//当前点击的key
     };
 
     componentWillMount() {
@@ -34,13 +37,13 @@ export default class MenuList extends Component {
             return data.map(item => {
                 if (item.children && item.children.length) {
                     return (
-                        <SubMenu key={item.key} title={item.title}>
+                        <SubMenu title={item.title} key={item.key}>
                             {this.renderMenuList(item.children)}
                         </SubMenu>
                     )
                 } else {
                     return (
-                        <MenuItem key={item.key}>
+                        <MenuItem title={item.title} key={item.key} >
                             <NavLink to={item.key}>{item.title}</NavLink>
                         </MenuItem>
                     )
@@ -48,6 +51,14 @@ export default class MenuList extends Component {
             })
         }
     };
+
+    handleClick = ({item,key}) => {
+        console.log(item)
+        if(key===this.state.currentKey)return false;
+        const {dispatch} = this.props;
+        dispatch(switchMenu(item.props.title));
+        this.setState({currentKey:key})
+    }
 
     render() {
         const { selectedKeys,defaultKey } = this.state;
@@ -60,6 +71,7 @@ export default class MenuList extends Component {
                 <Menu
                     defaultSelectedKeys={[selectedKeys]}
                     defaultOpenKeys={[defaultKey]}
+                    onClick={this.handleClick}
                     mode="inline"
                     theme="dark"
                 >
@@ -69,3 +81,4 @@ export default class MenuList extends Component {
         )
     }
 }
+export default connect()(MenuList)

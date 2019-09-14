@@ -1,6 +1,6 @@
 {
   "code": 0,
-  "message":"",
+  "message": "您当前请求的code码错误",
   "result": {
     "total_count": 100,
     "bike_list": [

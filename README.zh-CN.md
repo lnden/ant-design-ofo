@@ -57,10 +57,11 @@ yarn add axios --save
 yarn add echarts-for-react echarts --save
 yarn add react-draft-wysiwyg draftjs-to-html --save
 yarn add react-router-dom --save
-yarn node-sass sass-loader --save
-yarn less less-loader --save
-yarn babel-plugin-import --save
+yarn add node-sass sass-loader --save
+yarn add less less-loader --save
+yarn add babel-plugin-import --save
 yarn add jsonp --save
+yarn add redux-devtools-extension --save
 ```
 
 ### Feature
@@ -96,11 +97,12 @@ create-react-app构建项目应用使用sass方法
 修改less文件两种方式一种是在eject之前使用官方推荐的方式，使用的是官方推荐的 高级配置、babel-plugin-import 使用插件去修改
 另外一种方式是在npm run eject 之后修改配置文件，社区自行探索。安装 babel-plugin-import 修改 webpack.config 配置文件，详情见内注解commit记录a5e0fb
 
-### React-redux usage steps
+### redux usage steps
 
 - 使用redux需求描述：为完成头部组件面包屑处 展示对应菜单名称
 
 - 需求分析：
+
 &emsp;&emsp;1.菜单使用 ant-design Menu 组件渲染，查看相关Api得知，点击 MenuItem 调用函数 `function({ item, key })`可以获取当前点击的菜单自定义title以及key的信息。
 
 &emsp;&emsp;2.在每次点击 MenuItem 的时候发送 dispatch 修改 state menuName 的值。
@@ -108,7 +110,8 @@ create-react-app构建项目应用使用sass方法
 &emsp;&emsp;3.在头部组件内接收 redux state menuName 的值渲染到面包屑的位置。
 
 - 具体执行步骤：
-&emsp;&emsp;1.下载 react-redux redux 相关依赖
+
+&emsp;&emsp;1.下载 redux react-redux 相关依赖
 
 &emsp;&emsp;2.创建redux相关文件
 ```
@@ -155,7 +158,7 @@ const initialState = {
 const configStore = () => createStore(reducer,initialState)
 ```
 
-&emsp;&emsp;3.在/src/index.js组件内写入 redux 容器
+&emsp;&emsp;3.使用Provider容器包裹组件，并且传入全局store 文件存放/src/index.js
 ```
 import {Provider} from 'react-redux'
 import configStore from './redux/index.js'
@@ -165,4 +168,33 @@ const store = configStore();
 <Provider store={store}>
     <Router />
 </Provider>
+```
+
+&emsp;&emsp;4.使用connect连接redux与组件，在组件内发送dispatch
+```
+class MenuList extends Component {}
+export default connect()(MenuList)
+
+handleClick = ({item,key}) => {
+    const {dispatch} = this.props;
+    dispatch(switchMenu(item.props.title));
+}
+```
+
+&emsp;&emsp;5.使用connect连接redux与组件，在组件内接收state的值
+```
+class PublicHeader extends Component {
+    render() {
+        // 重点部分，使用connect并添加mapStateToProps使redux state 转换为
+        console.log(this.props.menuName)
+        return (<div>内容部分</div>)
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        menuName: state.menuName
+    }
+}
+export default connect(mapStateToProps)(PublicHeader)
 ```

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Menu} from 'antd'
 import {NavLink} from 'react-router-dom'
-import { connect } from 'react-redux'
 import menuList from '../../config/menuConfig'
+import { connect } from 'react-redux'
 import { switchMenu } from '../../redux/action'
 import './index.less'
 
@@ -13,9 +13,8 @@ class MenuList extends Component {
 
     state = {
         menuTreeNode: null,
-        selectedKeys:[''],// '/ul/buttons'
         defaultKey:[''],// '/ul'
-        currentKey:''//当前点击的key
+        currentKey:''//当前点击的key '/ul/buttons'
     };
 
     componentWillMount() {
@@ -28,7 +27,10 @@ class MenuList extends Component {
         const Hash = window.location.hash;
         const URL = Hash.slice(1,Hash.length)
         const defaultKey = `/${URL.split('/')[1]}`;
-        this.setState({selectedKeys:URL,defaultKey})
+        this.setState({currentKey:URL,defaultKey})
+
+        // location.hash.replace(/#/g,''); //  /city?a=1
+        // location.hash.replace(/#|\?.*$/g,'');  //  /city
     }
 
     // 递归渲染菜单
@@ -53,7 +55,6 @@ class MenuList extends Component {
     };
 
     handleClick = ({item,key}) => {
-        console.log(item)
         if(key===this.state.currentKey)return false;
         const {dispatch} = this.props;
         dispatch(switchMenu(item.props.title));
@@ -61,7 +62,7 @@ class MenuList extends Component {
     }
 
     render() {
-        const { selectedKeys,defaultKey } = this.state;
+        const { currentKey,defaultKey } = this.state;
         return (
             <div>
                 <div className="logo">
@@ -69,7 +70,7 @@ class MenuList extends Component {
                     <h1>IMOOC MS</h1>
                 </div>
                 <Menu
-                    defaultSelectedKeys={[selectedKeys]}
+                    selectedKeys={[currentKey]}
                     defaultOpenKeys={[defaultKey]}
                     onClick={this.handleClick}
                     mode="inline"

@@ -1,10 +1,10 @@
-import { createStore } from 'redux'
+/**
+ * create store
+ */
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import reducer from './reducer'
 
-const initialState = {
-    menuName: ''
-}
-
-const configStore = () => createStore(reducer,initialState);
+const configStore = () => createStore(reducer,composeWithDevTools(applyMiddleware()));
 
 export default configStore;

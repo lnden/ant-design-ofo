@@ -95,3 +95,74 @@ create-react-app构建项目应用使用sass方法
 
 修改less文件两种方式一种是在eject之前使用官方推荐的方式，使用的是官方推荐的 高级配置、babel-plugin-import 使用插件去修改
 另外一种方式是在npm run eject 之后修改配置文件，社区自行探索。安装 babel-plugin-import 修改 webpack.config 配置文件，详情见内注解commit记录a5e0fb
+
+### React-redux usage steps
+
+- 使用redux需求描述：为完成头部组件面包屑处 展示对应菜单名称
+
+- 需求分析：
+&emsp;&emsp;1.菜单使用 ant-design Menu 组件渲染，查看相关Api得知，点击 MenuItem 调用函数 `function({ item, key })`可以获取当前点击的菜单自定义title以及key的信息。
+
+&emsp;&emsp;2.在每次点击 MenuItem 的时候发送 dispatch 修改 state menuName 的值。
+
+&emsp;&emsp;3.在头部组件内接收 redux state menuName 的值渲染到面包屑的位置。
+
+- 具体执行步骤：
+&emsp;&emsp;1.下载 react-redux redux 相关依赖
+
+&emsp;&emsp;2.创建redux相关文件
+```
+./src
+    redux
+        action
+            index.js
+        reducer
+            index.js
+        index.js
+```
+具体内容查看如上文件，主要流程如下,入口为src/redux/index.js
+```
+// redux/action/index.js
+const type ={
+    SWITCH_MENU : 'SWITCH_MENU'
+}
+
+function switchMenu(menuName){
+    return {
+        type:type.SWITCH_MENU,
+        menuName
+    }
+}
+
+// redux/reducer/index.js
+const reducer = (state,action) => {
+    switch(action.type){
+        case type.SWITCH_MENU:
+            return {
+                ...state,
+                menuName: action.menuName
+            };
+        default:
+            return { ...state }
+    }
+}
+
+// redux/index.js
+import {createStore} from 'react-redux'
+const initialState = {
+    menuName:''
+}
+const configStore = () => createStore(reducer,initialState)
+```
+
+&emsp;&emsp;3.在/src/index.js组件内写入 redux 容器
+```
+import {Provider} from 'react-redux'
+import configStore from './redux/index.js'
+
+const store = configStore();
+
+<Provider store={store}>
+    <Router />
+</Provider>
+```

@@ -18,7 +18,8 @@ export default class Permission extends Component {
         isPermissionVisible: false,
         detailsInfo: null,
         menuInfo:[],//接口获取的权限列表
-        isAuthorizeVisible: false
+        isAuthorizeVisible: false,
+        targetKeys:[]
     };
 
     componentDidMount() {
@@ -26,10 +27,10 @@ export default class Permission extends Component {
     }
 
     requestList() {
-        axios.requestList(this, '/permission/list', {}, true)
-    }
+        axios.requestList(this, '/permission/list', {}, false)
+    }   
 
-    // 打开创建角色弹框
+    // 创建角色
     handleCreate = () => {
         this.setState({isRoleVisible: true})
     };
@@ -45,7 +46,7 @@ export default class Permission extends Component {
             isMock: false
         }).then(res => {
             if (res.code === 0) {
-                message.success(res.message);
+                message.success(res.result);
                 this.setState({isRoleVisible: false});
                 this.roleForm.props.form.resetFields();
                 this.requestList()
@@ -53,7 +54,7 @@ export default class Permission extends Component {
         })
     }
 
-    // 权限设置
+    // 设置权限
     handleSetting = () => {
         let item = this.state.selectedItem;
         if (!item) {
@@ -84,7 +85,7 @@ export default class Permission extends Component {
             }
         }).then(res => {
             if (res.code === 0) {
-                message.success(res.message);
+                message.success(res.result);
                 this.setState({isPermissionVisible: false});
                 this.permissionForm.props.form.resetFields();
                 this.requestList()
@@ -93,6 +94,7 @@ export default class Permission extends Component {
     };
 
 
+    // 用户授权
     userAuthorize = () => {
         let item = this.state.selectedItem;
         if (!item) {
@@ -104,21 +106,22 @@ export default class Permission extends Component {
         }
         this.setState({
             isAuthorizeVisible: true,
-            datailInfo: item
+            detailInfo: item
         })
         this.getRoleUserList(item.id)
     };
 
+    // 获取授权用户列表
     getRoleUserList = (id) => {
         axios.ajax({
             url:'permission/user_list',
             data:{
                 params:{id}
             },
-            isMock:true
+            isMock:false
         }).then(res=>{
             if(res.code===0){
-                this.getAuthUserList(res.result)
+                this.getAuthUserList(res.result.list)
             }
         })
     }
@@ -139,11 +142,8 @@ export default class Permission extends Component {
                 }
 
                 mockData.push(data)
-                this.setState({
-                    targetKeys,
-                    mockData
-                })
             }
+            this.setState({targetKeys, mockData})
         }
     }
 
@@ -159,9 +159,10 @@ export default class Permission extends Component {
                     ...data
                 }
             },
-            isMock: true
+            isMock: false
         }).then(res=>{
             if(res.code===0){
+                message.success(res.result);
                 this.setState({isAuthorizeVisible:false})
                 this.requestList()
             }
@@ -217,8 +218,9 @@ export default class Permission extends Component {
                 <Modal
                     title="用户授权"
                     visible={this.state.isAuthorizeVisible}
-                    onOk={()=>this.handleAuthorizeSubmit}
+                    onOk={this.handleAuthorizeSubmit}
                     onCancel={()=>{this.setState({isAuthorizeVisible: false})}}
+                    width={800}
                 >
 
                     <RoleAuthForm
@@ -298,7 +300,7 @@ class PermissionForm extends Component {
         return (
             <Form layout="horizontal">
                 <FormItem label="角色名称" {...formItemLayout}>
-                    <Input disabled placeholder={detailInfo.user_name}/>
+                    <Input disabled placeholder={detailInfo.role_name}/>
                 </FormItem>
                 <FormItem label="状态" {...formItemLayout}>
                     {
@@ -351,7 +353,7 @@ class RoleAuthForm extends Component {
         return (
             <Form layout="horizontal">
                 <FormItem label="角色名称" {...formItemLayout}>
-                    <Input disabled placeholder={detailInfo.user_name}/>
+                    <Input disabled placeholder={detailInfo.role_name}/>
                 </FormItem>
                 <FormItem label="选择用户" {...formItemLayout}>
                     <Transfer
@@ -359,9 +361,11 @@ class RoleAuthForm extends Component {
                         dataSource={this.props.mockData}
                         title={['待选用户','已选用户']}
                         showSearch
-                        searchPlaceholder='输入用户名'
+                        locale={
+                            {searchPlaceholder:'输入用户名'}
+                        }
                         filterOption={this.filterOption}
-                        targetKeys={this.state.targetKeys}
+                        targetKeys={this.props.targetKeys}
                         onChange={this.handleChange}
                         render={item=>item.title}
                     />

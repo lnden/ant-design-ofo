@@ -61,6 +61,7 @@ yarn add node-sass sass-loader --save
 yarn add less less-loader --save
 yarn add babel-plugin-import --save
 yarn add jsonp --save
+yarn add redux react-redux --save
 yarn add redux-devtools-extension --save
 ```
 

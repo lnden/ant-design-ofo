@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button,Modal,Form,Input,Radio,DatePicker,Select } from 'antd'
+import { Card, Button,Modal,Form,Input,Radio,DatePicker,Select,message } from 'antd'
 import axios from '../../utils/request'
 import Utils from '../../utils/utils'
 import BaseForm from '../../components/BaseForm'
@@ -18,8 +18,8 @@ export default class User extends Component {
     state = {
         dataSource: [],
         pagination: null,
-        selectedRowKeys:'',
-        selectedItem:[]
+        selectedRowKeys:null,
+        selectedItem:null
     }
 
     params = {
@@ -36,27 +36,28 @@ export default class User extends Component {
     }
 
     requestList = () => {
-        axios.requestList(this,'user/list',this.params,true)
+        axios.requestList(this,'user/list',this.params,false)
     };
 
     // 功能区操作
     handleOperate = (type) => {
         let item = this.state.selectedItem;
+        if(type !== 'create' && !item){
+            Modal.info({
+                title:'提示',
+                content:'请选择一个用户'
+            });
+            return
+        }
         switch(type){
             case 'create':
                 this.setState({
                     type,
                     isVisible:true,
-                    title:'创建员工'
+                    title:'创建员工',
+                    userInfo:null
                 });break;
             case 'edit':
-                if(!item){
-                    Modal.info({
-                        title:'提示',
-                        content:'请选择一个用户'
-                    });
-                    return
-                }
                 this.setState({
                     type,
                     isVisible:true,
@@ -71,14 +72,6 @@ export default class User extends Component {
                     userInfo:item
                 });break;
             default:
-                if(!item){
-                    Modal.info({
-                        title:'提示',
-                        content:'请选择一个用户'
-                    });
-                    return
-                }
-
                 Modal.confirm({
                     title:'确认删除',
                     content:'是否要删除当前选中的员工',
@@ -95,12 +88,13 @@ export default class User extends Component {
                 params:{
                     id:item.id
                 }
-            }
+            },
+            isMock: false
         }).then(res=>{
             if(res.code===0){
-                this.seState({
+                this.setState({
                     isVisible:false,
-                })
+                });
                 this.requestList()
             }
         })
@@ -114,20 +108,22 @@ export default class User extends Component {
             url: type==='create'?'user/create':'user/edit',
             data:{
                 params:data
-            }
+            },
+            isMock: false
         }).then(res=>{
-            if(res===0){
+            if(res.code===0){
                 this.userForm.props.form.resetFields()
                 this.setState({
                     isVisible: false
-                })
+                });
+                message.success(res.result);
                 this.requestList()
             }
         })
     }
 
     render() {
-        const { dataSource,title,isVisible } = this.state;
+        const { dataSource,title,isVisible,selectedRowKeys } = this.state;
         let footer = {};
         if(this.state.type==='detail'){
             footer = {
@@ -145,6 +141,7 @@ export default class User extends Component {
                 </Card>
                 <BaseTable
                     updateSelectedItem={Utils.updateSelectedItem.bind(this)}
+                    selectedRowKeys={selectedRowKeys}
                     columns={columns}
                     dataSource={dataSource}
                     pagination={false}

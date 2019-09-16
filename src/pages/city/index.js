@@ -22,7 +22,7 @@ export default class City extends Component {
     }
 
     requestList() {
-        getList(this.params, true).then(res => {
+        getList(this.params, true, false).then(res => {
             res.result.list.map((item, index) => item.key = index);
             this.setState({
                 dataSource: res.result.list,
@@ -41,9 +41,9 @@ export default class City extends Component {
     //城市开通提交
     handleSubmit = () => {
         let cityInfo = this.cityForm.props.form.getFieldsValue();
-        getOpenSave(cityInfo).then(res => {
-            message.success('城市开通成功');
+        getOpenSave(cityInfo,true,false).then(res => {
             this.setState({isShowOpenCity: false});
+            message.success('城市开通成功');
             this.requestList()
         })
     };

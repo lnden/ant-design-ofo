@@ -29,7 +29,7 @@ export default class Hightable extends Component {
                 },
                 isShowLoading: true
             },
-            isMock: true
+            isMock: false
         }).then(res => {
             res.result.list.map((item, index) => item.key = index)
             this.setState({

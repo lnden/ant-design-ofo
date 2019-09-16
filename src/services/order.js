@@ -6,7 +6,8 @@ export function getList(params, loading = false) {
         data: {
             params,
             isShowLoading: loading
-        }
+        },
+        isMock: false
     }).then(res => res)
 }
 
@@ -17,7 +18,7 @@ export function getDetailInfo(params, loading = false) {
             params,
             isShowLoading: loading
         },
-        isMock: true
+        isMock: false
     }).then(res => res)
 }
 
@@ -27,6 +28,8 @@ export function getDetail(params, loading = false) {
         data: {
             params
         }
+        ,
+        isMock: false
     }).then((res) => res)
 }
 
@@ -37,5 +40,7 @@ export function getFinish(params, loading = false) {
         data: {
             params
         }
+        ,
+        isMock: false
     }).then((res) => res)
 }

@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import { Card, Table, Button, Divider, Modal, message, Form } from 'antd'
 import FilterForm from './FilterForm'
 import columns from './columns'
-import { getList, getDetail, getFinish } from "../../services/order";
-import Utils from "../../utils/utils";
-import BasicForm from '../../components/BaseForm'
-import filterMap from './map'
+import { getDetail, getFinish } from "../../services/order";
 import axios from '../../utils/request'
 
 const FormItem = Form.Item;
@@ -23,27 +20,18 @@ export default class Order extends Component {
     };
 
     componentDidMount() {
-        // this.requestList()
-        axios.requestList(this,'order/list',this.params,true)
+        this.requestList()
     }
 
     // 获取数据列表
     requestList() {
-        getList(this.params, true).then(res => {
-            console.log(res)
-            res.result.list.map((item, index) => item.key = index);
-            this.setState({
-                dataSource: res.result.list,
-                pagination: Utils.pagination(res, (current) => {
-                    this.params.page = current;
-                })
-            })
-        })
+        axios.requestList(this,'order/list',this.params,false)
     }
 
     // 点击订单详情
     handleDetail = () => {
         let item = this.state.selectedItem;
+        console.log(item,111)
         if (!item) {
             Modal.info({
                 title: '信息',
@@ -51,7 +39,8 @@ export default class Order extends Component {
             })
             return;
         }
-        window.open(`/#/common/order/detail/${item.id}`,'_blank');
+        // window.open(`/#/common/order/detail/${item.id}`,'_blank');
+        this.props.history.push(`/common/order/detail/${item.id}`)
     }
 
     // 点击结束订单
@@ -74,7 +63,7 @@ export default class Order extends Component {
 
     // 确认结束订单
     handleFinishOrder = () => {
-        getFinish(this.params).then((res) => {
+        getFinish(this.params,true).then((res) => {
             message.success('订单结束成功')
             this.setState({
                 orderConfirmVisble: false
@@ -86,7 +75,7 @@ export default class Order extends Component {
     onSelectChange = (index, item) => {
         console.log('获取下标和该行数据：', index, item);
         this.setState({
-            selectedItem:item,
+            selectedItem:item[0],
             selectedRowKeys:index
         })
     }
@@ -94,12 +83,6 @@ export default class Order extends Component {
 
     searchBtn = (values) => {
         Object.assign(this.params,values);
-        this.requestList()
-    }
-
-    handleFilter = (params) =>{
-        console.log(params)
-        this.params = params;
         this.requestList()
     }
 
@@ -119,7 +102,6 @@ export default class Order extends Component {
             <div>
                 <Card>
                     <FilterForm handleSearch={this.searchBtn}/>
-                    <BasicForm layout="inline" formList={filterMap} filterSubmit={this.handleFilter}/>
                     <Divider type="horizontal" />
                     <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
                     <Button type="primary" onClick={this.handleFinish}>结束订单</Button>

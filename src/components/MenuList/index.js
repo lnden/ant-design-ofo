@@ -14,7 +14,8 @@ class MenuList extends Component {
     state = {
         menuTreeNode: null,
         defaultKey:[''],// '/ul'
-        currentKey:''//当前点击的key '/ul/buttons'
+        currentKey:'',//当前点击的key '/ul/buttons'
+        openKeys:[]//当前点击的MenuItem
     };
 
     componentWillMount() {
@@ -61,6 +62,25 @@ class MenuList extends Component {
         this.setState({currentKey:key})
     }
 
+    // ~~~~start~~~~
+    //   openKeys={this.state.openKeys}
+    //   onOpenChange={this.onOpenChange}
+    isMainMenu = key => {
+        return menuList.some(
+            item => key && (item.key === key || item.path === key || item.url === key)
+        );
+    };
+    onOpenChange = openKeys => {
+        const lastOpenKey = openKeys[openKeys.length - 1];
+        const moreThanOne = openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
+        this.setState({
+            openKeys: moreThanOne ? [lastOpenKey] : [...openKeys],
+        });
+    };
+    // ~~~~end~~~~~
+
+
+
     render() {
         const { currentKey,defaultKey } = this.state;
         return (
@@ -72,6 +92,8 @@ class MenuList extends Component {
                 <Menu
                     selectedKeys={[currentKey]}
                     defaultOpenKeys={[defaultKey]}
+                    openKeys={this.state.openKeys}
+                    onOpenChange={this.onOpenChange}
                     onClick={this.handleClick}
                     mode="inline"
                     theme="dark"

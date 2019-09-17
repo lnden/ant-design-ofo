@@ -309,3 +309,39 @@ yarn add stylelint-scss" -S
 }
 ```
 stylelint国内翻译的文档较少，使用方式与eslint相似
+
+### Prettier
+前面我们已经实现eslint、stylelint提高代码质量，操作npm run lint/stylelint 格式化代码片段，这样可以很好的提高代码质量，但是每次操作都需要手动执行。
+
+这时候我们设想在代码提交的时候格式化代码，如果有什么问题给出对象警告。
+
+手动配置prettier步骤如下：
+
+- 1.根目录下生成prettier配置文件.prettierrc
+- 2.安装使用相关依赖
+```$xslt
+yarn add prettier -S
+yarn add prettier-eslint -S
+yarn add prettier-eslint-cli -S
+yarn add eslint-plugin-prettier -S
+yarn add eslint-config-prettier -S
+yarn add husky -S
+yarn add lint-staged -S
+```
+- 3.修改package.json添加启动指令
+```$xslt
+"format": "prettier-eslint --write src/**/*.{js,less}",
+"precommit": "lint-staged"
+
+"lint-staged": {
+    "**/*.{js,jsx,scss,json,less}": [
+        "prettier-eslint --write",
+        "git add"
+    ],
+    "**/*.{js,jsx}": "eslint --ext .js",
+    "**/*.{scss}": "stylelint --syntax scss",
+    "**/*.{less}": "stylelint --syntax less"
+}
+```
+#### Prettier配置详解[PrettierConfig](https://prettier.io/docs/en/options.html#quotes)
+.prettierrc Prettier ships with a handful of customizable format options, usable in both the CLI and API.

@@ -10,12 +10,19 @@
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-compat": "^3.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.5",
     "jsonp": "^0.2.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lint-staged": "^9.2.5",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
+    "prettier": "^1.18.2",
+    "prettier-eslint": "^9.0.0",
+    "prettier-eslint-cli": "^5.0.0",
     "react-draft-wysiwyg": "^1.13.2",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
@@ -32,9 +39,9 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "lint": "eslint --ext .js --ext .jsx src/demo/",
-    "precommit": "npm run lint",
-    "stylelint": "stylelint --fix src/**/*.less"
+    "lint": "eslint --fix --ext .js --fix --ext .jsx src/demo/",
+    "stylelint": "stylelint --fix src/**/*.less",
+    "format": "prettier-eslint --write src/**/*.{js,less}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -159,5 +166,14 @@
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.3.1"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,scss,json,less}": [
+      "prettier-eslint --write",
+      "git add"
+    ],
+    "**/*.{js,jsx}": "eslint --ext .js",
+    "**/*.{scss}": "stylelint --syntax scss",
+    "**/*.{less}": "stylelint --syntax less"
   }
 }

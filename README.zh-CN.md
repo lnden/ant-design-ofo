@@ -200,3 +200,59 @@ const mapStateToProps = state => {
 }
 export default connect(mapStateToProps)(PublicHeader)
 ```
+
+> version V1.2.0
+
+### Eslint
+由于 create-react-app 已经为我们添加了eslint规则，所以eslint一些基本依赖就不需要重新下载了。
+
+手动配置eslint步骤如下：
+
+- 1.根目录下生成eslint配置文件.eslintrc、生成eslint忽略文件.eslintignore
+- 2.安装使用相关依赖
+```$xslt
+yarn add eslint-config-airbnb -S
+yarn add eslint-plugin-compat -S
+```
+- 3.修改package.json添加启动指令
+```$xslt
+"lint": "eslint --fix --ext .js --ext .jsx src/",
+"precommit": "npm run lint"
+```
+
+#### Eslint配置详解[EslintConfig](https://cn.eslint.org/docs/user-guide/configuring)
+.eslintrc被设计为完全可配置的，这意味着你可以关闭每一个规则而只运行基本语法验证，或混合和匹配 ESLint 默认绑定的规则和你的自定义规则，以让 ESLint 更适合你的项目。有两种主要的方式来配置 ESLint：
+- 1.Configuration Comments - 使用 JavaScript 注释把配置信息直接嵌入到一个代码源文件中。
+- 2.Configuration Files - 使用 JavaScript、JSON 或者 YAML 文件为整个目录（处理你的主目录）和它的子目录指定配置信息。可以配置一个独立的 .eslintrc.* 文件，或者直接在 package.json 文件里的 eslintConfig 字段指定配置，ESLint 会查找和自动读取它们，再者，你可以在命令行运行时指定一个任意的配置文件。
+
+##### Specifying Parser Options
+```$xslt
+"parserOptions": {
+    "desc": "- 这是个对象，表示你想使用的额外的语言特性",
+    "ecmaFeatures": { 
+        "desc": "启用实验性的语法",
+        "experimentalObjectRestSpread": true,
+        "legacyDecotators": true
+    }
+}
+```
+
+##### Specifying Parser
+```$xslt
+    "desc": "一个对Babel解析器的包装，使其能够与 ESLint 兼容。",
+    "parser": "babel-eslint"
+```
+
+##### Configuring Rules
+ESLint 附带有大量的规则。你可以使用注释或配置文件修改你项目中要使用的规则。要改变一个规则设置，你必须将规则 ID 设置为下列值之一
+
+- "off" 或 0 - 关闭规则
+- "warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出)
+- "error" 或 2 - 开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)
+   
+##### dev content
+- [legacyDecotators](https://github.com/babel/babel-eslint/releases)
+- [airbnb](https://github.com/airbnb/javascript)
+- [airbnb-ch](https://github.com/lin-123/javascript#types)
+- [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
+- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)

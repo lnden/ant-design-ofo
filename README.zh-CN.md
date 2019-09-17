@@ -49,7 +49,6 @@
     - request //请求封装
     - utils //公共方法
 
-
 ### Depend
 ```
 yarn add antd --save
@@ -256,3 +255,57 @@ ESLint 附带有大量的规则。你可以使用注释或配置文件修改你�
 - [airbnb-ch](https://github.com/lin-123/javascript#types)
 - [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
 - [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+
+### Stylelint
+A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.
+
+手动配置stylelint步骤如下：
+
+- 1.根目录下生成stylelint配置文件.stylelintrc
+- 2.install depend
+```$xslt
+yarn add stylelint -S
+yarn add stylelint-config-css-modules -S
+yarn add stylelint-config-prettier -S
+yarn add stylelint-config-standard -S
+yarn add stylelint-scss" -S
+```
+- 修改package.json文件，添加启动指令
+```$xslt
+"stylelint": "stylelint --fix src/**/*.less"
+```
+#### Stylelint配置详情[StylelintConfig](https://stylelint.io/user-guide/configuration#extends)
+.stylelintrc The linter expects a configuration object. You can either craft your own config or extend an existing one.
+
+##### Extends
+```$xslt
+{
+    "extends": ["stylelint-config-standard", "stylelint-config-prettier", "stylelint-config-css-modules"]
+}
+```
+
+##### Plugins
+```$xslt
+{
+    "extends": ["stylelint-config-standard", "stylelint-config-prettier", "stylelint-config-css-modules"],
+    "plugins": [
+        "stylelint-scss"
+    ],
+}
+
+```
+
+##### Rules
+```$xslt
+{
+    "extends": ["stylelint-config-standard", "stylelint-config-prettier", "stylelint-config-css-modules"],
+    "plugins": [
+        "stylelint-scss"
+    ],
+    "rules": {
+        "indentation": "tab",
+        "number-leading-zero": null
+    }
+}
+```
+stylelint国内翻译的文档较少，使用方式与eslint相似

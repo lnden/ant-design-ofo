@@ -65,8 +65,18 @@ export default class Detail extends Component {
                 anchor: new window.BMap.Size(18, 42)
             });
             startMarker = new window.BMap.Marker(startPoint, {icon: startIcon});
-            map.addOverlay(startMarker);
 
+            // 点击页面某点跳转并且获取相关ID值start
+            let labels = new window.BMap.Label('20190917',{offset:new window.BMap.Size(20,0)})
+            labels.setStyle({display:"none"})
+            startMarker.setLabel(labels);
+            startMarker.setTitle('ID值')
+            map.addOverlay(startMarker);
+            startMarker.addEventListener("click",(e)=>{
+                const id = e.target.getLabel().content
+                this.props.history.push(`/${id}`)
+            })
+            
 
             // 结束坐标点
             endPoint = new window.BMap.Point(last.lon, last.lat);

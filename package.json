@@ -41,7 +41,8 @@
     "test": "node scripts/test.js",
     "lint": "eslint --fix --ext .js --fix --ext .jsx src/demo/",
     "stylelint": "stylelint --fix src/**/*.less",
-    "format": "prettier-eslint --write src/**/*.{js,less}"
+    "format": "prettier-eslint --write src/**/*.{js,less}",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"

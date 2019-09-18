@@ -311,9 +311,7 @@ yarn add stylelint-scss" -S
 stylelint国内翻译的文档较少，使用方式与eslint相似
 
 ### Prettier
-前面我们已经实现eslint、stylelint提高代码质量，操作npm run lint/stylelint 格式化代码片段，这样可以很好的提高代码质量，但是每次操作都需要手动执行。
-
-这时候我们设想在代码提交的时候格式化代码，如果有什么问题给出对象警告。
+Prettier is an opinionated code formatter with support
 
 手动配置prettier步骤如下：
 
@@ -325,12 +323,29 @@ yarn add prettier-eslint -S
 yarn add prettier-eslint-cli -S
 yarn add eslint-plugin-prettier -S
 yarn add eslint-config-prettier -S
-yarn add husky -S
-yarn add lint-staged -S
 ```
 - 3.修改package.json添加启动指令
 ```$xslt
 "format": "prettier-eslint --write src/**/*.{js,less}",
+```
+#### Prettier配置详解[PrettierConfig](https://prettier.io/docs/en/options.html#quotes)
+.prettierrc Prettier ships with a handful of customizable format options, usable in both the CLI and API.
+
+### Commit总结
+
+前面我们已经实现eslint、stylelint、prettier提高代码质量，操作npm run lint/stylelint/format 格式化代码片段，这样可以很好的提高代码质量，但是每次操作都需要手动执行。
+
+这时候我们设想在代码提交的时候格式化代码，如果有什么问题给出对象警告。
+
+配置步骤如下：
+
+- 1.安装使用相关依赖
+```$xslt
+yarn add husky -S
+yarn add lint-staged -S
+```
+- 2.修改package.json添加启动指令
+```$xslt
 "precommit": "lint-staged"
 
 "lint-staged": {
@@ -343,5 +358,24 @@ yarn add lint-staged -S
     "**/*.{less}": "stylelint --syntax less"
 }
 ```
-#### Prettier配置详解[PrettierConfig](https://prettier.io/docs/en/options.html#quotes)
-.prettierrc Prettier ships with a handful of customizable format options, usable in both the CLI and API.
+每次提交代码的时候都会执行eslint/stylelint/prettier校验代码，能自动修复的自动修复，不能修复的在控制台给出对应警告。
+
+我们做一个测试，在src/demo/index.js新建一个组件，并且写入不规则代码，首次提交commit 这时候提交控制台会出现对应警告，第二次提交会消除一些可以自动修复的警告，但是还会出现如下报错，报错信息如下：
+```
+error  Delete `··`      prettier/prettier
+```
+就因为这个报错信息，导致我挣扎了很久都没把这个部分代码提交，最后我发现是因为.eslintrc里面配置了prettier导致的。
+```$xslt
+"extends": ["plugin:prettier/recommended"],
+```
+这个时候我猜肯定是eslint与preitter功能冲突了，当我查询了很多文档，以及国内外的github，焦头烂额的时候，我发现Webstorm编辑上面也会报错，缩进处标记这着红色波浪线，鼠标放在上面的时候报错信息与上面一致。我就在想是缩进出现的问题。
+
+这个时候冒着试试的方式在根目录下添加.editorconfig配置文件，修改缩进为4。这个时候再次commit可以了，报错信息也没有了。
+
+就在我准备这个报错信息在README记录的时候，我突然在想，既然是缩进导致的，eslint我设置的是4，那我的看看.prettierrc设置的是几，配置文件内没有配置，那我就去官方去看看默认配置的是几[PrettierConfig](https://prettier.io/docs/en/options.html#tabs),结果查看 `tabWidth` 默认是2。
+
+这时候我赶紧把根目录下面的.editorconfig配置文件删除，在.prettierrc配置 `"tabWidth": 4` 代码回撤，重新commit 这时候也没有报错，提交成功。
+
+nice~  这个报错终于解决了，并且也找到了相应的解决方案。我觉得应该把.prettierrc配置上并且根目录下也配置editorconfig。这样报错信息解决了，另一方面也能保证大家协同开发了。
+ 
+

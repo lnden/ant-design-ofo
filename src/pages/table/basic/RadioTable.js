@@ -1,27 +1,31 @@
-import React, {Component} from 'react'
-import {Table} from 'antd'
-import columns from './columns'
+import React, { Component } from 'react';
+import { Table } from 'antd';
+import columns from './columns';
 
 export default class RadioTable extends Component {
-    state = {
-        selectedRowKeys:[],
-        selectedItem:[]
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedRowKeys: [],
+            // selectedItem: [],
+        };
     }
 
     onRowClick = (record, index) => {
-        let selectKey = [index]
+        const selectKey = [index];
         this.setState({
-            selectedRowKeys: selectKey,//选中索引
-            selectedItem: record//选中字段
-        })
-    }
+            selectedRowKeys: selectKey, // 选中索引
+            // selectedItem: record, // 选中字段
+        });
+    };
 
     render() {
         const { selectedRowKeys } = this.state;
+        const { dataSource } = this.props;
         const rowSelection = {
             type: 'radio',
-            selectedRowKeys
-        }
+            selectedRowKeys,
+        };
         return (
             <Table
                 bordered
@@ -29,15 +33,15 @@ export default class RadioTable extends Component {
                 onRow={(record, index) => {
                     return {
                         onClick: () => {
-                            this.onRowClick(record, index)
-                        },//点击
-                        //onMouseEnter: () => { }//鼠标移入行
-                    }
+                            this.onRowClick(record, index);
+                        },
+                        // onMouseEnter: () => { }//鼠标移入行
+                    };
                 }}
                 columns={columns}
-                dataSource={this.props.dataSource}
+                dataSource={dataSource}
                 pagination={false}
             />
-        )
+        );
     }
 }

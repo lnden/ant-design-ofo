@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Table} from 'antd'
+import React, { Component } from 'react';
+import { Table } from 'antd';
 
 export default class HeadFiexd extends Component {
     render() {
@@ -22,27 +22,28 @@ export default class HeadFiexd extends Component {
             {
                 title: '生日',
                 dataIndex: 'birthday',
-                width: 120
+                width: 120,
             },
             {
                 title: '地址',
                 dataIndex: 'address',
-                width: 120
+                width: 120,
             },
             {
                 title: '早起时间',
                 dataIndex: 'time',
                 width: 120,
-            }
+            },
         ];
+        const { dataSource } = this.props;
         return (
             <Table
                 bordered
                 columns={columns}
-                dataSource={this.props.dataSource}
+                dataSource={dataSource}
                 pagination={false}
-                scroll={{y: 240}}//使用scroll定义表格高度，此时出现表头和表格内容宽度不一致，需要定义columns的宽度
+                scroll={{ y: 240 }} // 使用scroll定义表格高度，此时出现表头和表格内容宽度不一致，需要定义columns的宽度
             />
-        )
+        );
     }
 }

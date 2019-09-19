@@ -1,20 +1,23 @@
-import React, {Component} from 'react'
-import {Table} from 'antd'
+import React, { Component } from 'react';
+import { Table } from 'antd';
 
 export default class SortTable extends Component {
-
-    state = {
-        // sortOrder: "ascend",
-        sortOrder: "descend"
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            // sortOrder: "ascend",
+            sortOrder: 'descend',
+        };
+    }
 
     hanldeChange = (pagination, filters, sorter) => {
         this.setState({
-            sortOrder: sorter.order
-        })
+            sortOrder: sorter.order,
+        });
     };
 
     render() {
+        const { sortOrder, dataSource } = this.state;
         const columns = [
             {
                 title: 'Id',
@@ -30,8 +33,7 @@ export default class SortTable extends Component {
                 sorter: (a, b) => {
                     return a.age - b.age;
                 },
-                sortOrder:this.state.sortOrder
-
+                sortOrder,
             },
             {
                 title: '生日',
@@ -50,10 +52,10 @@ export default class SortTable extends Component {
             <Table
                 bordered
                 columns={columns}
-                dataSource={this.props.dataSource}
+                dataSource={dataSource}
                 pagination={false}
                 onChange={this.hanldeChange}
             />
-        )
+        );
     }
 }

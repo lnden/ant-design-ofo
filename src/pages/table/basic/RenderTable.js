@@ -1,17 +1,10 @@
-import React, {Component} from 'react'
-import {Table} from 'antd'
-import columns from './columns'
+import React, { Component } from 'react';
+import { Table } from 'antd';
+import columns from './columns';
 
 export default class RenderTable extends Component {
-
     render() {
-        return (
-            <Table
-                bordered
-                columns={columns}
-                dataSource={this.props.dataSource}
-                pagination={false}
-            />
-        )
+        const { dataSource } = this.props;
+        return <Table bordered columns={columns} dataSource={dataSource} pagination={false} />;
     }
 }

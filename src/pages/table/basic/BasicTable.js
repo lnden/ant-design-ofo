@@ -1,11 +1,13 @@
-import React, {Component} from 'react'
-import {Table} from 'antd'
-import columns from './columns'
+import React, { Component } from 'react';
+import { Table } from 'antd';
+import columns from './columns';
 
 export default class BasicTable extends Component {
-
-    state = {
-        dataSource: [],
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: [],
+        };
     }
 
     componentDidMount() {
@@ -19,7 +21,7 @@ export default class BasicTable extends Component {
                 birthday: '2002-01-01',
                 address: '黑龙江省七台河市',
                 time: '09:00',
-                key: '11'
+                key: '11',
             },
             {
                 id: '1',
@@ -30,7 +32,7 @@ export default class BasicTable extends Component {
                 birthday: '2000-01-01',
                 address: '北京市昌平区',
                 time: '09:00',
-                key: '22'
+                key: '22',
             },
             {
                 id: '2',
@@ -41,21 +43,14 @@ export default class BasicTable extends Component {
                 birthday: '2004-01-01',
                 address: '天津市北辰区',
                 time: '09:00',
-                key: '33'
-            }
-        ]
-        this.setState({dataSource})
+                key: '33',
+            },
+        ];
+        this.setState({ dataSource });
     }
 
     render() {
-        const {dataSource} = this.state;
-        return (
-            <Table
-                bordered
-                columns={columns}
-                dataSource={dataSource}
-                pagination={false}
-            />
-        )
+        const { dataSource } = this.state;
+        return <Table bordered columns={columns} dataSource={dataSource} pagination={false} />;
     }
 }

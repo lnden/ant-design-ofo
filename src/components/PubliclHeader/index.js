@@ -1,44 +1,52 @@
-import React, {Component} from 'react'
-import {Row, Col} from 'antd'
-import {connect} from 'react-redux'
-import './index.less'
+import React, { Component } from 'react';
+import { Row, Col } from 'antd';
+import { connect } from 'react-redux';
+import './index.less';
 import Util from '../../utils/utils';
-import axios from '../../utils/request'
+import axios from '../../utils/request';
 
 class PublicHeader extends Component {
-    state = {
-        clear: null,
-        sysTime: Util.formateDate(new Date().getTime()),
-        dayPictureUrl: '',
-        weather: ''
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            clear: null,
+            sysTime: Util.formateDate(new Date().getTime()),
+            dayPictureUrl: '',
+            weather: '',
+        };
+    }
 
     componentWillMount() {
-        this.clear = setInterval(() => {
-            let sysTime = Util.formateDate(new Date().getTime())
-            this.setState({sysTime})
+        const clear = setInterval(() => {
+            const sysTime = Util.formateDate(new Date().getTime());
+            this.setState({ sysTime });
         }, 1000);
+        this.setState(() => clear);
         this.getWeatherApiData();
     }
 
     componentWillUnmount() {
-        clearInterval(this.clear)
+        const { clear } = this.state;
+        clearInterval(clear);
     }
 
     getWeatherApiData = () => {
-        let city = '北京';
-        const baseApi = `http://api.map.baidu.com/telematics/v3/weather?location=${encodeURIComponent(city)}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`;
-        axios.jsonp({url: baseApi}).then(res => {
-            let data = res.results[0].weather_data[0];
+        const city = '北京';
+        const baseApi = `http://api.map.baidu.com/telematics/v3/weather?location=${encodeURIComponent(
+            city,
+        )}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`;
+        axios.jsonp({ url: baseApi }).then(res => {
+            const data = res.results[0].weather_data[0];
             this.setState({
                 dayPictureUrl: data.dayPictureUrl,
-                weather: data.temperature
-            })
-        })
+                weather: data.temperature,
+            });
+        });
     };
 
     render() {
-        const {menuName} = this.props;
+        const { menuName } = this.props;
+        const { sysTime, dayPictureUrl, weather } = this.state;
         return (
             <header className="header">
                 <Row className="header-top">
@@ -52,24 +60,21 @@ class PublicHeader extends Component {
                         {menuName || '首页'}
                     </Col>
                     <Col span={20} className="weather">
-                        <span className="date">{this.state.sysTime}</span>
+                        <span className="date">{sysTime}</span>
                         <span className="weather-img">
-                            <img src={this.state.dayPictureUrl} alt=""/>
+                            <img src={dayPictureUrl} alt="" />
                         </span>
-                        <span className="weather-detail">
-                            {this.state.weather}
-                        </span>
+                        <span className="weather-detail">{weather}</span>
                     </Col>
                 </Row>
             </header>
-        )
+        );
     }
 }
 
-
 const mapStateToProps = state => {
     return {
-        menuName: state.menuName
-    }
+        menuName: state.menuName,
+    };
 };
-export default connect(mapStateToProps)(PublicHeader)
+export default connect(mapStateToProps)(PublicHeader);

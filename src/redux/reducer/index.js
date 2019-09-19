@@ -1,18 +1,18 @@
 // import { combineReducers } from 'redux'
-import { type } from '../action'
+import { type } from '../action';
 
 const initialState = {
-    menuName: ''
-}
+    menuName: '',
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case type.SWITCH_MENU:
             return {
                 ...state,
-                menuName: action.menuName
+                menuName: action.menuName,
             };
         default:
-            return { ...state }
+            return { ...state };
     }
-}
+};

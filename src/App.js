@@ -1,10 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './index.less';
 
-export default function App(props){
-    return (
-        <Fragment>
-            {props.children}
-        </Fragment>
-    )
+export default function App({ children }) {
+    return <>{children}</>;
 }

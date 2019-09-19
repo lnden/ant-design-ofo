@@ -1,8 +1,4 @@
-
-export const GENDER_OPTIONS = Object.freeze([
-    { label: '男', value: 1 },
-    { label: '女', value: 2 },
-]);
+export const GENDER_OPTIONS = Object.freeze([{ label: '男', value: 1 }, { label: '女', value: 2 }]);
 
 export const STATUS_OPTIONS = Object.freeze([
     { label: '持而盈之，不如其已', value: 1 },
@@ -22,5 +18,3 @@ export const INTEREST_OPTIONS = Object.freeze([
     { label: '骑行', value: 7 },
     { label: '麦霸', value: 8 },
 ]);
-
-

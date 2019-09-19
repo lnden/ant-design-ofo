@@ -1,49 +1,47 @@
-
 .header {
-  background:#fff;
-  .header-top {
-    height: 60px;
-    line-height: 60px;
-    padding: 0 20px;
-    text-align: right;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    a {
-      margin-left: 20px;
-    }
-  }
-  .breadcrumb {
-    height: 40px;
-    line-height: 40px;
-    padding: 0 20px;
-    .breadcrumb-title {
-      font-size:18px;
-      text-align: center;
-      &:after{
-        position: absolute;
-        content: '';
-        left: 50px;
-        border-top: 9px solid #fff;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        top:39px;
-        left:90px;
-      }
-    }
-    .weather {
-      text-align: right;
-      .date {
-        margin: 0 10px;
-        vertical-align: middle;
-      }
-      .weather-img {
-        margin: 0 5px;
-        img{
-          width:22px;
+    background: #fff;
+    .header-top {
+        height: 60px;
+        line-height: 60px;
+        padding: 0 20px;
+        text-align: right;
+        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+        a {
+            margin-left: 20px;
         }
-      }
-      .weather-detail {
-        vertical-align: middle;
-      }
     }
-  }
+    .breadcrumb {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        .breadcrumb-title {
+            font-size: 18px;
+            text-align: center;
+            &:after {
+                position: absolute;
+                content: '';
+                border-top: 9px solid #fff;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                top: 39px;
+                left: 90px;
+            }
+        }
+        .weather {
+            text-align: right;
+            .date {
+                margin: 0 10px;
+                vertical-align: middle;
+            }
+            .weather-img {
+                margin: 0 5px;
+                img {
+                    width: 22px;
+                }
+            }
+            .weather-detail {
+                vertical-align: middle;
+            }
+        }
+    }
 }

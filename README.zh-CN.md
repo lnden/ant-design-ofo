@@ -379,3 +379,10 @@ error  Delete `··`      prettier/prettier
 nice~  这个报错终于解决了，并且也找到了相应的解决方案。我觉得应该把.prettierrc配置上并且根目录下也配置editorconfig。这样报错信息解决了，另一方面也能保证大家协同开发了。
  
 
+### Animate
+
+switch nav run animate
+
+```$xslt
+yarn add react-transition-group -S
+```

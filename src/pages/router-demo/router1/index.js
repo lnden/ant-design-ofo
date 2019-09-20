@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {HashRouter, Route, Link, Switch} from 'react-router-dom'
-import Main from '../Main'
-import About from '../About'
-import Discover from '../Discover'
+import React, { Component } from 'react';
+import { HashRouter, Route, Link, Switch } from 'react-router-dom';
+import Main from '../Main';
+import About from '../About';
+import Discover from '../Discover';
 
 export default class Routers extends Component {
     render() {
@@ -20,14 +20,14 @@ export default class Routers extends Component {
                             <Link to="/discover">Discover</Link>
                         </li>
                     </ul>
-                    <hr/>
+                    <hr />
                     <Switch>
-                        <Route path="/" exact component={Main}></Route>
-                        <Route path="/about" component={About}></Route>
-                        <Route path="/discover" component={Discover}></Route>
+                        <Route path="/" exact component={Main} />
+                        <Route path="/about" component={About} />
+                        <Route path="/discover" component={Discover} />
                     </Switch>
                 </div>
             </HashRouter>
-        )
+        );
     }
 }

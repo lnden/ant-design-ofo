@@ -1,11 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 
 export default class Discover extends Component {
     render() {
-        return (
-            <div>
-                发现
-            </div>
-        )
+        return <div>发现</div>;
     }
 }

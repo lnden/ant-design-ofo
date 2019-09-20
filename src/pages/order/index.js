@@ -1,98 +1,105 @@
-import React, { Component } from 'react'
-import { Card, Table, Button, Divider, Modal, message, Form } from 'antd'
-import FilterForm from './FilterForm'
-import columns from './columns'
-import { getDetail, getFinish } from "../../services/order";
-import axios from '../../utils/request'
+import React, { Component } from 'react';
+import { Card, Table, Button, Divider, Modal, message, Form } from 'antd';
+import FilterForm from './FilterForm';
+import columns from './columns';
+import { getDetail, getFinish } from '../../services/order';
+import axios from '../../utils/request';
 
 const FormItem = Form.Item;
 export default class Order extends Component {
-
-    state = {
-        dataSource: [],
-        orderInfo:{},
-        orderConfirmVisble: false,
-        selectedRowKeys:[2]
-    }
-
     params = {
-        page: 1
+        page: 1,
     };
 
-    componentDidMount() {
-        this.requestList()
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: [],
+            orderInfo: {},
+            orderConfirmVisble: false,
+            selectedRowKeys: [2],
+        };
     }
 
-    // 获取数据列表
-    requestList() {
-        axios.requestList(this,'order/list',this.params,false)
+    componentDidMount() {
+        this.requestList();
     }
 
     // 点击订单详情
     handleDetail = () => {
-        let item = this.state.selectedItem;
-        console.log(item,111)
-        if (!item) {
+        const { selectedItem } = this.state;
+        const { history } = this.props;
+        if (!selectedItem) {
             Modal.info({
                 title: '信息',
-                content: '请先选择一条订单'
-            })
+                content: '请先选择一条订单',
+            });
             return;
         }
         // window.open(`/#/common/order/detail/${item.id}`,'_blank');
-        this.props.history.push(`/common/order/detail/${item.id}`)
-    }
+        history.push(`/common/order/detail/${selectedItem.id}`);
+    };
 
     // 点击结束订单
     handleFinish = () => {
-        let item = this.state.selectedItem;
-        if (!item) {
+        const { selectedItem } = this.state;
+        if (!selectedItem) {
             Modal.info({
                 title: '信息',
-                content: '请选择一条订单进行结束'
-            })
+                content: '请选择一条订单进行结束',
+            });
             return;
         }
         getDetail(this.params).then(res => {
             this.setState({
                 orderInfo: res.result,
-                orderConfirmVisble: true
-            })
-        })
-    }
+                orderConfirmVisble: true,
+            });
+        });
+    };
 
     // 确认结束订单
     handleFinishOrder = () => {
-        getFinish(this.params,true).then((res) => {
-            message.success('订单结束成功')
+        getFinish(this.params, true).then(res => {
+            message.success('订单结束成功');
             this.setState({
-                orderConfirmVisble: false
-            })
+                orderConfirmVisble: false,
+            });
             this.requestList();
-        })
-    }
+        });
+    };
 
     onSelectChange = (index, item) => {
-        console.log('获取下标和该行数据：', index, item);
+        // console.log('获取下标和该行数据：', index, item);
         this.setState({
-            selectedItem:item[0],
-            selectedRowKeys:index
-        })
-    }
+            selectedItem: item[0],
+            selectedRowKeys: index,
+        });
+    };
 
+    searchBtn = values => {
+        this.params = [...values];
+        this.requestList();
+    };
 
-    searchBtn = (values) => {
-        Object.assign(this.params,values);
-        this.requestList()
+    // 获取数据列表
+    requestList() {
+        axios.requestList(this, 'order/list', this.params, false);
     }
 
     render() {
         const formItemLayout = {
             labelCol: { span: 5 },
-            wrapperCol: { span: 19 }
-        }
+            wrapperCol: { span: 19 },
+        };
 
-        const { dataSource, pagination, orderConfirmVisble, orderInfo, selectedRowKeys } = this.state;
+        const {
+            dataSource,
+            pagination,
+            orderConfirmVisble,
+            orderInfo,
+            selectedRowKeys,
+        } = this.state;
         const rowSelection = {
             type: 'radio',
             selectedRowKeys,
@@ -101,10 +108,14 @@ export default class Order extends Component {
         return (
             <div>
                 <Card>
-                    <FilterForm handleSearch={this.searchBtn}/>
+                    <FilterForm handleSearch={this.searchBtn} />
                     <Divider type="horizontal" />
-                    <Button type="primary" onClick={this.handleDetail}>订单详情</Button>
-                    <Button type="primary" onClick={this.handleFinish}>结束订单</Button>
+                    <Button type="primary" onClick={this.handleDetail}>
+                        订单详情
+                    </Button>
+                    <Button type="primary" onClick={this.handleFinish}>
+                        结束订单
+                    </Button>
                     <Divider type="horizontal" />
                     <Table
                         columns={columns}
@@ -117,8 +128,8 @@ export default class Order extends Component {
                         visible={orderConfirmVisble}
                         onCancel={() => {
                             this.setState({
-                                orderConfirmVisble: false
-                            })
+                                orderConfirmVisble: false,
+                            });
                         }}
                         onOk={this.handleFinishOrder}
                         width={600}
@@ -128,7 +139,7 @@ export default class Order extends Component {
                                 {orderInfo.bike_sn}
                             </FormItem>
                             <FormItem label="剩余电量" {...formItemLayout}>
-                                {orderInfo.battery + '%'}
+                                {`${orderInfo.battery}%`}
                             </FormItem>
                             <FormItem label="行程开始时间" {...formItemLayout}>
                                 {orderInfo.start_time}
@@ -140,6 +151,6 @@ export default class Order extends Component {
                     </Modal>
                 </Card>
             </div>
-        )
+        );
     }
 }

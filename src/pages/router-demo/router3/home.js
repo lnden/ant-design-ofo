@@ -1,8 +1,9 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Homes extends Component {
     render() {
+        const { children } = this.props;
         return (
             <div>
                 <ul>
@@ -16,9 +17,9 @@ export default class Homes extends Component {
                         <Link to="/discover">Discover</Link>
                     </li>
                 </ul>
-                <hr/>
-                {this.props.children}
+                <hr />
+                {children}
             </div>
-        )
+        );
     }
 }

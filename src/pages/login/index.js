@@ -1,11 +1,7 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react';
 
 export default class Login extends Component {
-    render(){
-        return(
-            <div>
-                Login页面
-            </div>
-        )
+    render() {
+        return <div>Login页面</div>;
     }
 }

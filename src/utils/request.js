@@ -60,7 +60,7 @@ export default class Axios {
         return new Promise((resolve, reject) => {
             axios({
                 url: options.isMock ? options.url : `${options.url}.json`,
-                method: 'post',
+                method: 'get',
                 baseURL: baseApi,
                 timeout: 5000,
                 params: (options.data && options.data.params) || '',

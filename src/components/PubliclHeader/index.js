@@ -21,7 +21,7 @@ class PublicHeader extends Component {
             const sysTime = Util.formateDate(new Date().getTime());
             this.setState({ sysTime });
         }, 1000);
-        this.setState(() => clear);
+        this.setState({ clear });
         this.getWeatherApiData();
     }
 

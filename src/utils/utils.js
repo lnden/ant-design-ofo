@@ -56,7 +56,7 @@ export default {
         const dataList = [...data];
         let newDate = [];
         for (let i = 0, { length } = dataList; i < length; i += 1) {
-            dataList[i].key = dataList[i].id;
+            dataList[i].key = i;
             newDate = [...newDate, dataList[i]];
         }
         return newDate;

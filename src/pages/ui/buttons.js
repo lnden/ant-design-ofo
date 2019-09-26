@@ -13,7 +13,7 @@ export default class Buttons extends Component {
     }
 
     handleClickLoading = () => {
-        const { loading } = this.props;
+        const { loading } = this.state;
         this.setState({ loading: !loading });
     };
 

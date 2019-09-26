@@ -46,13 +46,9 @@ export default class City extends Component {
 
     requestList() {
         getList(this.params, true, false).then(res => {
-            res.result.list.map((item, index) => {
-                const value = [...item];
-                value.key = index;
-                return value;
-            });
+            const data = res.result.list;
             this.setState({
-                dataSource: res.result.list,
+                dataSource: Utils.formateDataList(data),
                 pagination: Utils.pagination(res, current => {
                     this.params.page = current;
                 }),

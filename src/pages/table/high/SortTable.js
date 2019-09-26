@@ -17,7 +17,8 @@ export default class SortTable extends Component {
     };
 
     render() {
-        const { sortOrder, dataSource } = this.state;
+        const { sortOrder } = this.state;
+        const { dataSource } = this.props;
         const columns = [
             {
                 title: 'Id',

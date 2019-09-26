@@ -5,6 +5,7 @@ import HeadFixed from './HeadFixed';
 import SideFixed from './SideFixed';
 import SortTable from './SortTable';
 import OperationTable from './OperationTable';
+import Utils from '../../../utils/utils';
 
 export default class Hightable extends Component {
     params = {
@@ -35,13 +36,9 @@ export default class Hightable extends Component {
                 isMock: false,
             })
             .then(res => {
-                res.result.list.map((item, index) => {
-                    const value = [...item];
-                    value.key = index;
-                    return value;
-                });
+                const data = res.result.list;
                 this.setState({
-                    dataSource: res.result.list,
+                    dataSource: Utils.formateDataList(data),
                 });
             });
     };

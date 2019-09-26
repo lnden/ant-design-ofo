@@ -55,11 +55,12 @@ export default class OpeartionTable extends Component {
                 title: '早起时间',
                 dataIndex: 'time',
             },
+
             {
                 title: '操作',
                 render: item => {
                     return (
-                        <Button size="small" onClick={this.handleDelete(item)}>
+                        <Button size="small" onClick={() => this.handleDelete(item)}>
                             删除
                         </Button>
                     );

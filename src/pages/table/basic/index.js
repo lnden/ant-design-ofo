@@ -47,13 +47,9 @@ export default class Tables extends Component {
                 isMock: false,
             })
             .then(res => {
-                res.result.list.map((item, index) => {
-                    const value = [...item];
-                    value.key = index;
-                    return value;
-                });
+                const data = res.result.list;
                 this.setState({
-                    dataSource: res.result.list,
+                    dataSource: Utils.formateDataList(data),
                     // selectedRowKeys: [],
                     // selectedRows: null,
                     pagination: Utils.pagination(res, current => {

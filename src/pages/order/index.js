@@ -22,7 +22,7 @@ export default class Order extends Component {
     }
 
     componentDidMount() {
-        this.requestList();
+        this.requestList(this.params);
     }
 
     // 点击订单详情
@@ -65,7 +65,7 @@ export default class Order extends Component {
             this.setState({
                 orderConfirmVisble: false,
             });
-            this.requestList();
+            this.requestList(this.params);
         });
     };
 
@@ -79,12 +79,12 @@ export default class Order extends Component {
 
     searchBtn = values => {
         this.params = [...values];
-        this.requestList();
+        this.requestList(this.params);
     };
 
     // 获取数据列表
-    requestList() {
-        axios.requestList(this, 'order/list', this.params, false);
+    requestList(page) {
+        axios.requestList(this, 'order/list', page, false);
     }
 
     render() {

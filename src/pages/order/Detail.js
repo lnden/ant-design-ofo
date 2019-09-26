@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
 import { getDetailInfo } from '../../services/order';
+import './detail.less';
 
 export default class Detail extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            orderInfo: {},
+        };
     }
 
     componentDidMount() {
         const orderId = { id: 123456 };
         // let orderId = this.props.match.params.orderId;
         if (orderId) {
-            this.getDetailInfo(orderId);
-        }
-    }
-
-    getDetailInfo(orderId) {
-        getDetailInfo(orderId).then(res => {
-            this.setState({
-                orderInfo: res.result,
+            getDetailInfo(orderId).then(res => {
+                this.setState({
+                    orderInfo: res.result,
+                });
+                this.renderMap();
             });
-            this.renderMap();
-        });
+        }
     }
 
     renderMap = () => {
@@ -134,10 +133,9 @@ export default class Detail extends Component {
 
     formatPoint = list => {
         const trackPoint = [];
-        for (let i = 0, { length } = list; i < length; i + 1) {
-            const point = list[i];
-            trackPoint.push(new window.BMap.Point(point.lon, point.lat));
-        }
+        list.forEach(item => {
+            trackPoint.push(new window.BMap.Point(item.lon, item.lat));
+        });
         return trackPoint;
     };
 

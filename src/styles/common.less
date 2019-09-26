@@ -1,5 +1,14 @@
 @import './default.less';
 
+.clearfix {
+    &::after {
+        content: ' ';
+        clear: both;
+        display: block;
+        visibility: hidden;
+    }
+}
+
 .container {
     .menu-left {
         height: calc(100vh);

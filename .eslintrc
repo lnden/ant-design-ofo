@@ -11,6 +11,7 @@
         "jasmine": true
     },
     "rules": {
+        //"class-methods-use-this": "off",
         //https://github.com/yannickcr/eslint-plugin-react/blob/HEAD/docs/rules/jsx-props-no-spreading.md
         "react/jsx-props-no-spreading": ["error",{
             "custom": "ignore"

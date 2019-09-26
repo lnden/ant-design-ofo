@@ -11,15 +11,11 @@ export default class Axios {
             isMock,
         }).then(res => {
             if (res.code === 0) {
-                const list = res.result.list.map((item, index) => {
-                    item.key = index;
-                    return item;
-                });
+                const data = res.result.list;
                 _this.setState({
-                    dataSource: list,
+                    dataSource: Utils.formateDataList(data),
                     pagination: Utils.pagination(res, current => {
-                        _this.params.page = current;
-                        _this.requestList();
+                        _this.requestList(current);
                     }),
                 });
             }
@@ -33,6 +29,7 @@ export default class Axios {
                 {
                     param: 'callback',
                 },
+                /* eslint-disable */
                 function(err, response) {
                     if (response.status === 'success') {
                         resolve(response);
@@ -40,6 +37,7 @@ export default class Axios {
                         reject(response.message);
                     }
                 },
+                /* eslint-enable */
             );
         });
     }

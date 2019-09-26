@@ -25,12 +25,12 @@ export default class User extends Component {
     }
 
     componentDidMount() {
-        this.requestList();
+        this.requestList(this.params);
     }
 
     handleFilter = params => {
         this.params = params;
-        this.requestList();
+        this.requestList(this.params);
     };
 
     // 功能区操作
@@ -94,7 +94,7 @@ export default class User extends Component {
                     this.setState({
                         isVisible: false,
                     });
-                    this.requestList();
+                    this.requestList(this.params);
                 }
             });
     };
@@ -118,13 +118,13 @@ export default class User extends Component {
                         isVisible: false,
                     });
                     message.success(res.result);
-                    this.requestList();
+                    this.requestList(this.params);
                 }
             });
     };
 
-    requestList = () => {
-        axios.requestList(this, 'user/list', this.params, false);
+    requestList = page => {
+        axios.requestList(this, 'user/list', page, false);
     };
 
     render() {

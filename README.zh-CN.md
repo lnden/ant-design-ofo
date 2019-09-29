@@ -386,3 +386,30 @@ switch nav run animate
 ```$xslt
 yarn add react-transition-group -S
 ```
+切换导航更换内容区动画暂不添加
+
+### Babel
+
+#### Decorators
+
+为 create-react-app 添加最新提案语法支持 decorators 装饰器
+
+- 1.安装依赖
+```$xslt
+yarn add @babel/plugin-proposal-decorators -S
+```
+- 2.修改config/webpack.config.js配置文件
+```$xslt
+[
+    require.resolve('@babel/plugin-proposal-decorators'),
+    {
+        legacy: true
+    }
+]
+```
+- 3.重新启动项目使用@装饰器
+
+具体使用内容见src/pages/home/index.js
+
+配置详细信息 [CSDN](https://blog.csdn.net/daydream13580130043/article/details/90511322)、[思否](https://segmentfault.com/a/1190000017162255)
+

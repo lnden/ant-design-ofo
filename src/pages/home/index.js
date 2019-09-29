@@ -26,3 +26,14 @@ export default class Home extends Component {
         );
     }
 }
+
+// 装饰器的使用
+// function testable(target) {
+//     target.prototype.isTestable = true;
+// }
+//
+// @testable
+// class MyTestableClass {}
+//
+// const obj = new MyTestableClass();
+// console.log(obj.isTestable);

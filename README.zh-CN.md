@@ -413,3 +413,20 @@ yarn add @babel/plugin-proposal-decorators -S
 
 配置详细信息 [CSDN](https://blog.csdn.net/daydream13580130043/article/details/90511322)、[思否](https://segmentfault.com/a/1190000017162255)
 
+
+#### Optional-chaining
+
+为 create-react-app 添加最新提案语法支持 Optional-chaining 链判断运算符
+
+- 1.安装依赖
+```$xslt
+yarn add @babel/plugin-proposal-optional-chaining -S
+```
+- 2.修改config/webpack.config.js配置文件
+```$xslt
+[require.resolve('@babel/plugin-proposal-optional-chaining')]
+```
+- 3.重新启动项目使用链判断运算符
+具体使用内容见src/pages/home/index.js
+
+语法介绍 [ES6](http://es6.ruanyifeng.com/?search=%E8%A3%85&x=0&y=0#docs/proposals#%E9%93%BE%E5%88%A4%E6%96%AD%E8%BF%90%E7%AE%97%E7%AC%A6)、[Babel](https://babeljs.io/docs/en/next/babel-plugin-proposal-optional-chaining)

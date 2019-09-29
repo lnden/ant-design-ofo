@@ -392,7 +392,8 @@ module.exports = function(webpackEnv) {
                       {
                         legacy: true
                       }
-                  ]
+                  ],
+                  [require.resolve('@babel/plugin-proposal-optional-chaining')]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/

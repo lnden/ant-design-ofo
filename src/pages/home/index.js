@@ -3,6 +3,22 @@ import './default.scss';
 import './default.less';
 
 export default class Home extends Component {
+    componentDidMount() {
+        const message = {
+            body: {
+                user: {
+                    firstName: 'Lily',
+                },
+            },
+        };
+        const firstName =
+            (message && message.body && message.body.user && message.body.user.firstName) ||
+            'default';
+        const otherFirstName = message?.body?.user?.firstName || 'default';
+        console.log(firstName);
+        console.log(otherFirstName);
+    }
+
     handleClick = () => {
         // window.location.href =`/#/common/roder/detail/${1}`;
         // window.open(`/#/common/order/detail/${1}`,'_blank');

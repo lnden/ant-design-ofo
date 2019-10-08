@@ -200,7 +200,7 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(PublicHeader)
 ```
 
-> version V1.2.0
+> version v1.0.0 该版本主要使用 antd 基础组件搭建页面、使用按需加载antd、系统同时使用sass/less语法、提取常量、封装公用组件、以及百度地图、Echarts图表应用、设计权限、接入 react-redux 等功能
 
 ### Eslint
 由于 create-react-app 已经为我们添加了eslint规则，所以eslint一些基本依赖就不需要重新下载了。
@@ -216,7 +216,6 @@ yarn add eslint-plugin-compat -S
 - 3.修改package.json添加启动指令
 ```$xslt
 "lint": "eslint --fix --ext .js --ext .jsx src/",
-"precommit": "npm run lint"
 ```
 
 #### Eslint配置详解[EslintConfig](https://cn.eslint.org/docs/user-guide/configuring)
@@ -272,7 +271,7 @@ yarn add stylelint-scss" -S
 ```
 - 修改package.json文件，添加启动指令
 ```$xslt
-"stylelint": "stylelint --fix src/**/*.less"
+"stylelint": "stylelint --fix src/**/*.less",
 ```
 #### Stylelint配置详情[StylelintConfig](https://stylelint.io/user-guide/configuration#extends)
 .stylelintrc The linter expects a configuration object. You can either craft your own config or extend an existing one.
@@ -391,7 +390,6 @@ yarn add react-transition-group -S
 ### Babel
 
 #### Decorators
-
 为 create-react-app 添加最新提案语法支持 decorators 装饰器
 
 - 1.安装依赖
@@ -415,7 +413,6 @@ yarn add @babel/plugin-proposal-decorators -S
 
 
 #### Optional-chaining
-
 为 create-react-app 添加最新提案语法支持 Optional-chaining 链判断运算符
 
 - 1.安装依赖
@@ -430,3 +427,5 @@ yarn add @babel/plugin-proposal-optional-chaining -S
 具体使用内容见src/pages/home/index.js
 
 语法介绍 [ES6](http://es6.ruanyifeng.com/?search=%E8%A3%85&x=0&y=0#docs/proposals#%E9%93%BE%E5%88%A4%E6%96%AD%E8%BF%90%E7%AE%97%E7%AC%A6)、[Babel](https://babeljs.io/docs/en/next/babel-plugin-proposal-optional-chaining)
+
+> version v1.1.0 该版本主要针对业务代码的格式化、规范化操作，添加 Eslint、Stylelint、Prettier 等检查工具。设置代码提交 commit 之后自动检测代码是否规范，自动修正可预测问题，手动修复console警告。另外还使用 @babel/plugin 等插件，使用 ECMAScript 提案性语法。 

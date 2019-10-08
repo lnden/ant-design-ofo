@@ -36,7 +36,22 @@
 - body: 具体的修改信息 应该尽量详细
 - footer: 放置写备注的，如果是 bug ，可以把bug id放入
 
-## Git版本规范
+### emoji 使用指南
+
+- git commit -m "`:tada:` Initialize Repo" :tada: 初次提交
+- git commit -m "`:sparkles:` add register page" :sparkles: 引入新功能
+- git commit -m "`:bug:` modify username error" :bug: 修复 bug
+- git commit -m "`:lipstick:` modify login page style" :lipstick: 更新 UI 和样式文件
+- git commit -m "`:memo:` add readme file" :memo: 撰写文档
+- git commit -m "`:bookmark:` release v1.1.0" :bookmark: 发行/版本标签 
+- git commit -m "`:ambulance:` change login error" :ambulance: 重要补丁
+- git commit -m "`:zap:` add dvajs" :zap: 提升性能
+- git commit -m "`:art:` change directory structure" :art: 改进代码结构/代码格式
+- git commit -m "`:wrench:` change directory structure" :wrench: 修改配置文件
+- git commit -m "`:arrow_up:` up react version" :arrow_up: 升级依赖
+- git commit -m "`:arrow_down:` down react version" :arrow_down: 降级依赖
+    
+## Git分支规范
 
 - 分支
     - master分支为主分支(保护分支)，不能直接在master上进行修改代码和提交
@@ -45,5 +60,4 @@
     - fix分支为bug修复分支，需要根据实际情况对已发布的版本进行漏洞修复，merge完成就可以删除
 
 
-## 详细规范 https://segmentfault.com/a/1190000016691552
-## [图标地址]（https://gitmoji.carloscuesta.me/）
+[详细规范](https://segmentfault.com/a/1190000016691552)、[图标地址](https://gitmoji.carloscuesta.me/)

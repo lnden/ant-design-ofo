@@ -429,3 +429,11 @@ yarn add @babel/plugin-proposal-optional-chaining -S
 语法介绍 [ES6](http://es6.ruanyifeng.com/?search=%E8%A3%85&x=0&y=0#docs/proposals#%E9%93%BE%E5%88%A4%E6%96%AD%E8%BF%90%E7%AE%97%E7%AC%A6)、[Babel](https://babeljs.io/docs/en/next/babel-plugin-proposal-optional-chaining)
 
 > version v1.1.0 该版本主要针对业务代码的格式化、规范化操作，添加 Eslint、Stylelint、Prettier 等检查工具。设置代码提交 commit 之后自动检测代码是否规范，自动修正可预测问题，手动修复console警告。另外还使用 @babel/plugin 等插件，使用 ECMAScript 提案性语法。 
+
+### Useing dvajs
+
+使用 create-react-app 创建项目接入 react-redux 把各个页面的数据源存入 redux ，这样对应每个页面都产生一个 store/ 包括acrions、reducer、state，这样来开发一个大项目不以利于后期的维护，取而代之react-redux 为 dvajs，dva是在redux基础上的一层封装，广泛应用于阿里、蚂蚁金服。
+
+本项目只针对 react-redux 实现了一个简单的面包屑功能，如果想了解 react-redux 使用方法请查看 [xxxxx](xxxxx)
+
+v1.3.0 版本计划对 create-react-app 进行 dva 的接入，接入流程查看 [Useing dvajs](./README.dva.md)

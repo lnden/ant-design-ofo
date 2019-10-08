@@ -1,4 +1,4 @@
-简体中文 | [English](./README.md) 
+简体中文 | [English](./README.md) | [提交规范](./README.norm.md)
 
 ### Description
 该项目主要是针对 ant-design 配合 react、react-redux、react-router-dom4.0 以及第三方插件BMap、Echarts、Easy-mock来实现的基础应用。

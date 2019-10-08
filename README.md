@@ -1,4 +1,4 @@
-English | [简体中文](./README.zh-CN.md) 
+English | [简体中文](./README.zh-CN.md) | [提交规范](./README.norm.md)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -1,9 +1,17 @@
 /**
+ * 配置moment语言
+ * */
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+/**
  * 使用 dvajs 启动程序入口
  * */
 import dva from 'dva';
 import './index.less';
 import { createBrowserHistory } from 'history';
+
+moment.locale('zh-cn');
 
 // 1. Initialize
 const app = dva({

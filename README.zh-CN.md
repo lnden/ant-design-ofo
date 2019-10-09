@@ -430,10 +430,148 @@ yarn add @babel/plugin-proposal-optional-chaining -S
 
 > version v1.1.0 该版本主要针对业务代码的格式化、规范化操作，添加 Eslint、Stylelint、Prettier 等检查工具。设置代码提交 commit 之后自动检测代码是否规范，自动修正可预测问题，手动修复console警告。另外还使用 @babel/plugin 等插件，使用 ECMAScript 提案性语法。 
 
-### Useing dvajs
+### Useing Dvajs
 
 使用 create-react-app 创建项目接入 react-redux 把各个页面的数据源存入 redux ，这样对应每个页面都产生一个 store/ 包括acrions、reducer、state，这样来开发一个大项目不以利于后期的维护，取而代之react-redux 为 dvajs，dva是在redux基础上的一层封装，广泛应用于阿里、蚂蚁金服。
 
 本项目只针对 react-redux 实现了一个简单的面包屑功能，如果想了解 react-redux 使用方法请查看 [xxxxx](xxxxx)
 
-v1.3.0 版本计划对 create-react-app 进行 dva 的接入，接入流程查看 [Useing dvajs](./README.dva.md)
+v1.3.0 版本计划对 create-react-app 进行 dva 的接入，接入流程查看 [Useing dvajs](./README.dva.md)，并且添加国家语言切换功能
+
+### Setting Language
+
+项目已经配置切换为 dva 来控制 store 数据源了，接下来我们要使用 store 给项目添加国际化多语言，我首先简单介绍下国际化和store数据结构的设计：
+
+此处采用 immutable 数据格式，把数据存于 model，同样国际化的判断参数定为： i18n 存于app的model中，取值来源于浏览器的本地缓存localStorage用户若设置了某种语言，则存在这里，用户下次访问系统，也依然能唤起上次所选中的语言，当初次访问时，语言默认先取自浏览器，若依然取不到则默认咱们的中文。
+
+这里我们只实现 中文，英文，繁体 三种语言的国家化即可，因为引用了antd组件库，故此处国际化部分包括两部分，
+
+- （1）antd库的国际化，比如antd中的固定组件里的 ‘确定，OK’‘下一页，Next Page’等，antd官网有详细说明
+
+- （2）业务框架自己的国际化，比如“用户名，Username”，“密码，Password”等，这里采用react-intl国际化组件实现
+
+
+#### 安装immutable和react-intl
+```
+yarn add immutable react-intl -S
+npm install immutable react-intl -S
+```
+这里我简单介绍下，react-intl是一个国际化的第三方库，目前最新版本为3.3.2，我们切换为2.X的版本来使用该教程
+
+修改models目录下的app.js中引入import {Map} from 'immutable' 如下
+
+```
+import {Map} from 'immutable';
+
+const initState = Map({
+    i18n: 'zh_CN'
+})
+
+export default {
+    namespace: 'app',   
+    state:initState,
+    subscriptions: {},    
+    effects: {
+        * changeLang ({payload: {value}}, { put }) {
+            yield put({ type: 'updateLang', payload: {value}});
+        }
+    
+    },
+    reducers: {
+        updateLang (state,{payload:{value}}) {
+            return state.set('i18n',value);
+        },
+    }
+};
+```
+修改routers目录下BBB.js如下（在页面添加切换语言功能，并且触发dispatch修改state数据）
+
+```
+import React, { Component } from 'react';
+import {connect} from 'dva';
+import { Link } from 'dva/router';
+import {Row, Col, Dropdown, Menu, Button} from 'antd'
+
+const MenuItem = Menu.Item;
+
+class BBB extends Component {
+
+    changeLang=(e)=>{
+        const {dispatch} = this.props;
+        dispatch({
+            type:'app/changeLang',
+            payload:{
+                value:e.key
+            }
+        })
+    }
+    
+    render() {
+        const {i18n} = this.props;
+        const menu=(
+            <Menu 
+                onClick={this.changeLang}
+                selectedKeys={[i18n]}
+            >
+                <MenuItem key="zh_CN">中文</MenuItem>
+                <MenuItem key="en_US">英文</MenuItem>
+                <MenuItem key="zh_HK">繁体</MenuItem>
+            </Menu>
+        )
+        
+        return (
+            <div>
+                <p>
+                BBB页
+                </p>
+                <Link to={'/aaa'}>去AAA页面</Link>
+                <br />
+                <Link to={'/ccc'}>去CCC页面</Link>
+                
+                <Row>
+                    <Col offset={2}>
+                        <Dropdown trigger={['click']} overlay={menu}>
+                            <Button>{i18n=='zh_CN'?'中文':i18n=='en_US'?'英文':'繁体'}</Button>
+                        </Dropdown>
+                    </Col>
+                </Row>
+            </div>
+        );
+    }
+}
+
+export default connect(({
+app
+})=>({
+i18n:app.get('i18n')
+}))(BBB)
+```
+上修改主要功能：
+
+app.js 增加初始语言参数i18n,增加effects和reducers方法，用于接收语言切换的action，并存储选中的key值
+
+BBB.js 增加connect使当前组件接入store数据，增加切换组件，用于点击切换语言，并dispatch一个action给app/changeLang，触发修改修改model数据。
+
+到这里，数据层面的流程已经打通，接下来处理国际化逻辑，国际化组件必然放于跟组件或最外层组件包裹，这样全局均可以使用并生效
+
+#### 创建Locale组件
+
+在src目录下，新建locale组件，Locale组件为国际化报错组件，外层为antd组件、内层为业务文案国际化解决方案，并且根据store的变化来切换语言的使用
+[locale](./src/locale.js)
+
+#### 创建locales存放文案 
+
+在src目录下，新建locales目录，里面新建index.js文件，此目录用于存放所有项目的文案国际化文件
+[locales](./src/locales)
+
+#### 包裹展示国际化内容
+
+修改src/routers.js文件，使用包裹组件<Locale>对需要进行国际化的内容进行包裹
+[routers](./src/routers.js)
+
+#### 使用antd组件、业务文案
+
+修改BBB组件，增加injectIntl国际化的接入，并增加三个示例，两个antd组件 分页和日期，一个业务文案 用户名和密码
+[BBB组件](./src/routes/BBB.js)
+
+

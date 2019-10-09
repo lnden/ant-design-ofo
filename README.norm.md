@@ -44,7 +44,7 @@
 - git commit -m "`:lipstick:` modify login page style" :lipstick: 更新 UI 和样式文件
 - git commit -m "`:memo:` add readme file" :memo: 撰写文档
 - git commit -m "`:bookmark:` release v1.1.0" :bookmark: 发行/版本标签 
-- git commit -m "`:globe_with_meridians:` release v1.1.0" :globe_with_meridians: 发行/版本标签 
+- git commit -m "`:globe_with_meridians:` release v1.1.0" :globe_with_meridians: 国际化与本地化 
 - git commit -m "`:ambulance:` change login error" :ambulance: 重要补丁
 - git commit -m "`:zap:` add dvajs" :zap: 提升性能
 - git commit -m "`:art:` change directory structure" :art: 改进代码结构/代码格式

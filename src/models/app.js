@@ -1,13 +1,38 @@
+import { Map } from 'immutable';
+
+const initState = Map({
+    i18n: 'zh_CN',
+});
+
 export default {
     namespace: 'app',
 
-    state: {
-        name: '这是app的model',
-    },
+    state: initState,
 
     subscriptions: {},
 
-    effects: {},
+    effects: {
+        *changeLang(
+            {
+                payload: { value },
+            },
+            { put },
+        ) {
+            yield put({
+                type: 'updateLang',
+                payload: { value },
+            });
+        },
+    },
 
-    reducers: {},
+    reducers: {
+        updateLang(
+            state,
+            {
+                payload: { value },
+            },
+        ) {
+            return state.set('i18n', value);
+        },
+    },
 };

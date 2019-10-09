@@ -8,7 +8,7 @@ const { menuGlobal } = config;
 
 function RouterConfig({ history, app }) {
     return (
-        <main className="container">
+        <main className="containers">
             <Locale>
                 <Router history={history}>
                     <Switch>
